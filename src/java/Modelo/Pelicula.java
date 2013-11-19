@@ -17,7 +17,37 @@ public class Pelicula {
     String portada;
     String trailer;
     
-    Pelicula(){
+    public Pelicula(){
     }
+
+    public Pelicula(int ID, String titulo, String descripcion, String portada, String trailer) {
+        this.ID = ID;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.portada = portada;
+        this.trailer = trailer;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getPortada() {
+        return portada;
+    }
+
+    public String getTrailer() {
+        return trailer;
+    }
+    
+    
     
 }
