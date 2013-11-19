@@ -11,5 +11,9 @@ package Modelo;
  * @author jose
  */
 public class Pelicula {
-    
+    int ID;
+    String titulo;
+    String descripcion;
+    String portada;
+    String trailer;
 }
