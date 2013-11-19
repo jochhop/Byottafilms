@@ -19,8 +19,8 @@ public class Valoracion implements Serializable{
       
     @Id
     @Temporal(TemporalType.TIMESTAMP)
-    GregorianCalendar fecha;
-    float nota;   
+    private GregorianCalendar fecha;
+    private float nota;   
 
     public Valoracion(){}
     
