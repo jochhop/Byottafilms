@@ -11,5 +11,13 @@ package Modelo;
  * @author Gabriel
  */
 public class Usuario {
+    int id;
+    String nombre;
+    String apellidos;
+    String email;
+    int rol;
+    String password;
+    String nick;
+    String avatar;
     
 }
