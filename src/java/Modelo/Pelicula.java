@@ -16,4 +16,8 @@ public class Pelicula {
     String descripcion;
     String portada;
     String trailer;
+    
+    Pelicula(){
+    }
+    
 }
