@@ -6,10 +6,31 @@
 
 package Modelo;
 
+import java.util.GregorianCalendar;
+
 /**
  *
  * @author Gabriel
  */
 public class Valoracion {
+    float nota;
+    GregorianCalendar fecha;
+
+    public Valoracion(){}
+    
+    public Valoracion(float nota, GregorianCalendar fecha) {
+        this.nota = nota;
+        this.fecha = fecha;
+    }
+
+    public float getNota() {
+        return nota;
+    }
+
+    public GregorianCalendar getFecha() {
+        return fecha;
+    }
+    
+    
     
 }
