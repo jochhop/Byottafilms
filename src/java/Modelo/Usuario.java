@@ -9,6 +9,10 @@ package Modelo;
 /**
  *
  * @author Gabriel
+ * 
+ * 
+ * @proyect BYOTTAFILMS
+ * 
  */
 public class Usuario {
     
