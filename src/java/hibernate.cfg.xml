@@ -7,8 +7,6 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/byottabbdd?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">byottaroot</property>
     <property name="hibernate.connection.password">grupo7sistemasbbdd</property>
-    <class-cache class="Modelo.Pelicula" include="all" usage="read-write"/>
-    <class-cache class="Modelo.Usuario" include="all" usage="read-write"/>
-    <class-cache class="Modelo.Valoracion" include="all" usage="read-write"/>
+    <mapping package="Modelo"/>
   </session-factory>
 </hibernate-configuration>
