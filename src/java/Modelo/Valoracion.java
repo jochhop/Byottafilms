@@ -6,15 +6,21 @@
 
 package Modelo;
 
+import java.io.Serializable;
+import javax.persistence.*;
 import java.util.GregorianCalendar;
 
 /**
  *
  * @author Gabriel
  */
-public class Valoracion {
-    float nota;
+@Entity (name="Valoraciones")
+public class Valoracion implements Serializable{
+      
+    @Id
+    @Temporal(TemporalType.TIMESTAMP)
     GregorianCalendar fecha;
+    float nota;   
 
     public Valoracion(){}
     
