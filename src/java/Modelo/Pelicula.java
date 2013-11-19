@@ -6,16 +6,22 @@
 
 package Modelo;
 
+import java.io.Serializable;
+import javax.persistence.*;
+
 /**
  *
  * @author jose
  */
-public class Pelicula {
-    int ID;
-    String titulo;
-    String descripcion;
-    String portada;
-    String trailer;
+@Entity(name="Peliculas")
+public class Pelicula implements Serializable {    
+    
+    @Id
+    private int ID;
+    private String titulo;
+    private String descripcion;
+    private String portada;
+    private String trailer;
     
     public Pelicula(){
     }
