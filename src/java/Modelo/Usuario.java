@@ -5,20 +5,25 @@
  */
 package Modelo;
 
+import java.io.Serializable;
+import javax.persistence.*;
+
 /**
  *
  * @author Gabriel
  */
-public class Usuario {
-
-    int id;
-    String nombre;
-    String apellidos;
-    String email;
-    int rol;
-    String password;
-    String nick;
-    String avatar;
+@Entity(name="Usuarios")
+public class Usuario implements Serializable {
+    
+    @Id
+    private int id;
+    private String nombre;
+    private String apellidos;
+    private String email;
+    private int rol;
+    private String password;
+    private String nick;
+    private String avatar;
 
     public Usuario(){}
 
