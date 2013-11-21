@@ -27,9 +27,9 @@ public class ConjuntoPeliculas {
         return listPeliculas.get(id);
     }
         
-    public void newPelicula(String titulo, String descripcion, String portada, String trailer){
+    public void newPelicula(int id, String titulo, String descripcion, String portada, String trailer){
         
-        Pelicula pelicula = new Pelicula(titulo, descripcion, portada, trailer,null);
+        Pelicula pelicula = new Pelicula(id, titulo, descripcion, portada, trailer, null);
         
         listPeliculas.add(pelicula);        
         

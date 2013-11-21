@@ -30,7 +30,8 @@ public class Pelicula implements Serializable {
     public Pelicula(){
     }
 
-    public Pelicula(String titulo, String descripcion, String portada, String trailer, ArrayList<Valoracion> valoraciones) {        
+    public Pelicula(int id, String titulo, String descripcion, String portada, String trailer, ArrayList<Valoracion> valoraciones) {        
+        this.ID = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.portada = portada;

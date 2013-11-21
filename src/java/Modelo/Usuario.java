@@ -18,7 +18,7 @@ public class Usuario implements Serializable {
     
     @Id
     @GeneratedValue
-    private int id;
+    private int ID;
     private String nombre;
     private String apellidos;
     private String email;
@@ -32,7 +32,7 @@ public class Usuario implements Serializable {
     public Usuario(){}
 
     public Usuario(int id, String nombre, String apellidos, String email, int rol, String password, String nick, String avatar, ArrayList<Valoracion> valoraciones) {
-        this.id = id;
+        this.ID = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -41,10 +41,20 @@ public class Usuario implements Serializable {
         this.nick = nick;
         this.avatar = avatar;
         this.valoraciones = valoraciones;
-    }    
+    }
+    
+    public Usuario(String nombre, String apellidos, String email, int rol, String password, String nick, String avatar){
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.email = email;
+        this.rol = rol;
+        this.password = password;
+        this.nick = nick;
+        this.avatar = avatar;
+    }
     
     public int getId() {
-        return id;
+        return ID;
     }
 
     public String getNombre() {
