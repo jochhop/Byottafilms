@@ -18,18 +18,21 @@ import java.util.GregorianCalendar;
 public class Valoracion implements Serializable{
       
     @Id
-    @ManyToOne
+    @OneToOne
     private Usuario valorador;
+    @OneToOne
+    private Pelicula pelicula;
     @Temporal(TemporalType.TIMESTAMP)
     private GregorianCalendar fecha;
     private float nota;   
 
     public Valoracion(){}
     
-    public Valoracion(float nota, GregorianCalendar fecha, Usuario valorador) {
+    public Valoracion(float nota, GregorianCalendar fecha, Usuario valorador, Pelicula pelicula) {
         this.nota = nota;
         this.fecha = fecha;
         this.valorador = valorador;
+        this.pelicula = pelicula;
     }
 
     public float getNota() {
@@ -44,4 +47,7 @@ public class Valoracion implements Serializable{
         return valorador;
     }
     
+    public Pelicula getPelicula(){
+        return pelicula;
+    }
 }

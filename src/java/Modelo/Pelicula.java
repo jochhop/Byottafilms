@@ -7,6 +7,7 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.*;
 
 /**
@@ -22,16 +23,19 @@ public class Pelicula implements Serializable {
     private String descripcion;
     private String portada;
     private String trailer;
+    @OneToMany
+    private ArrayList<Valoracion> valoraciones;
     
     public Pelicula(){
     }
 
-    public Pelicula(int ID, String titulo, String descripcion, String portada, String trailer) {
+    public Pelicula(int ID, String titulo, String descripcion, String portada, String trailer, ArrayList<Valoracion> valoraciones) {
         this.ID = ID;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.portada = portada;
         this.trailer = trailer;
+        this.valoraciones = valoraciones;
     }
 
     public int getID() {
@@ -52,6 +56,10 @@ public class Pelicula implements Serializable {
 
     public String getTrailer() {
         return trailer;
+    }
+
+    public ArrayList<Valoracion> getValoraciones() {
+        return valoraciones;
     }
     
     

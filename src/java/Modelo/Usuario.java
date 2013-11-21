@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.*;
 
 /**
@@ -24,10 +25,12 @@ public class Usuario implements Serializable {
     private String password;
     private String nick;
     private String avatar;
+    @OneToMany
+    private ArrayList<Valoracion> valoraciones;
 
     public Usuario(){}
 
-    public Usuario(int id, String nombre, String apellidos, String email, int rol, String password, String nick, String avatar) {
+    public Usuario(int id, String nombre, String apellidos, String email, int rol, String password, String nick, String avatar, ArrayList<Valoracion> valoraciones) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -36,6 +39,7 @@ public class Usuario implements Serializable {
         this.password = password;
         this.nick = nick;
         this.avatar = avatar;
+        this.valoraciones = valoraciones;
     }    
     
     public int getId() {
@@ -70,4 +74,7 @@ public class Usuario implements Serializable {
         return avatar;
     }
 
+    public ArrayList<Valoracion> getValoraciones(){
+        return valoraciones;
+    }
 }
