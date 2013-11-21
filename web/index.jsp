@@ -9,9 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>ByottaFilms</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Estamos trabajando para hacer la mejor web de recomendación de peliculas EVER!!</h1>
     </body>
 </html>
