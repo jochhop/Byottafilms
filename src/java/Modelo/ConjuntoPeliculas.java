@@ -8,10 +8,6 @@ package Modelo;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author jose
- */
 public class ConjuntoPeliculas {
     
     ArrayList<Pelicula> listPeliculas;
@@ -40,7 +36,7 @@ public class ConjuntoPeliculas {
     }
     
     public void deletePelicula(int ID){
-        if(listPeliculas.remove(listPeliculas.get(ID))){
+         if(listPeliculas.remove(listPeliculas.get(ID))){
             
         }else{
             //EL fallo copon.
