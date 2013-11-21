@@ -18,19 +18,19 @@ import javax.persistence.*;
 public class Pelicula implements Serializable {    
     
     @Id
-    private int ID;
+    @GeneratedValue
+    private int ID;    
     private String titulo;
     private String descripcion;
     private String portada;
     private String trailer;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private ArrayList<Valoracion> valoraciones;
     
     public Pelicula(){
     }
 
-    public Pelicula(int ID, String titulo, String descripcion, String portada, String trailer, ArrayList<Valoracion> valoraciones) {
-        this.ID = ID;
+    public Pelicula(String titulo, String descripcion, String portada, String trailer, ArrayList<Valoracion> valoraciones) {        
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.portada = portada;

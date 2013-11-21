@@ -17,6 +17,7 @@ import javax.persistence.*;
 public class Usuario implements Serializable {
     
     @Id
+    @GeneratedValue
     private int id;
     private String nombre;
     private String apellidos;
@@ -25,7 +26,7 @@ public class Usuario implements Serializable {
     private String password;
     private String nick;
     private String avatar;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private ArrayList<Valoracion> valoraciones;
 
     public Usuario(){}

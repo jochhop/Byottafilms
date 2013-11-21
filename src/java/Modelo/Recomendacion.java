@@ -6,10 +6,27 @@
 
 package Modelo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author jose
  */
 public class Recomendacion {
+    
+    ArrayList<Pelicula> recomendacion;
+    
+    Recomendacion(){}
+    
+    public ArrayList<Pelicula> getRecomendacion(){
+        
+        /*La recomendacion se crea a partir de los algoritmos que utilicemos!
+        
+        Nos devolvera una lista de peiculas que luego transformaremos para que nos la muestre en la web.
+        
+        */
+        
+        return recomendacion;
+    }
     
 }
