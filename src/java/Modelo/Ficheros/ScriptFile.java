@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 
-package Modelo;
+package Modelo.Ficheros;
 
+import Modelo.Valoraciones.ConjuntoValoraciones;
+import Modelo.Usuarios.ConjuntoUsuarios;
+import Modelo.Peliculas.ConjuntoPeliculas;
 import java.util.ArrayList;
 
 /**
@@ -18,11 +21,13 @@ public class ScriptFile {
     private ConjuntoUsuarios usuarios;
     private ArrayList<String> nombres;
     private ArrayList<String> apellidos;
+    private String password;
     
     public ScriptFile(){
         peliculas = new ConjuntoPeliculas();
         valoraciones = new ConjuntoValoraciones();
         usuarios = new ConjuntoUsuarios();
+        password = "abc123";
         nombres.add("jose");
         nombres.add("ruben");
         nombres.add("gabri");
@@ -63,4 +68,9 @@ public class ScriptFile {
         }
         return nick;
     }
+    
+    public String getPassword(){
+        return password;
+    }
+            
 }

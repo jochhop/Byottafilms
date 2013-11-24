@@ -6,6 +6,7 @@
 
 package Modelo;
 
+import Modelo.Peliculas.Pelicula;
 import java.util.ArrayList;
 
 /**

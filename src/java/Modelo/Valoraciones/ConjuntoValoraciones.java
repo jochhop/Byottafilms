@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Modelo;
+package Modelo.Valoraciones;
 
 import java.util.ArrayList;
 
