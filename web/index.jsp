@@ -4,8 +4,6 @@
     Author     : Gabriel
 --%>
 
-<%@page import="Modelo.Script"%>
-<%@page import="Modelo.Pelicula"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
