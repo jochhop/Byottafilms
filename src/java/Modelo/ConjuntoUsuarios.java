@@ -16,6 +16,10 @@ public class ConjuntoUsuarios {
     
     ArrayList<Usuario> listUsuarios;
 
+    public ConjuntoUsuarios(){
+        
+    }
+    
     public ConjuntoUsuarios(ArrayList<Usuario> listUsuarios) {
         this.listUsuarios = listUsuarios;
     }

@@ -18,36 +18,27 @@ import java.util.GregorianCalendar;
 public class Valoracion implements Serializable{
       
     @Id
-    @OneToOne
-    private Usuario valorador;
-    @OneToOne
-    private Pelicula pelicula;
-    @Temporal(TemporalType.TIMESTAMP)
-    private GregorianCalendar fecha;
+    private int idUsuario;
+    private int idPelicula;
     private float nota;   
 
     public Valoracion(){}
     
-    public Valoracion(float nota, GregorianCalendar fecha, Usuario valorador, Pelicula pelicula) {
+    public Valoracion(float nota, int idUsuario, int idPelicula) {
         this.nota = nota;
-        this.fecha = fecha;
-        this.valorador = valorador;
-        this.pelicula = pelicula;
+        this.idUsuario = idUsuario;
+        this.idPelicula = idPelicula;
     }
 
     public float getNota() {
         return nota;
     }
-
-    public GregorianCalendar getFecha() {
-        return fecha;
+    
+    public int getUsuario(){
+        return idUsuario;
     }
     
-    public Usuario getUsuario(){
-        return valorador;
-    }
-    
-    public Pelicula getPelicula(){
-        return pelicula;
+    public int getPelicula(){
+        return idPelicula;
     }
 }
