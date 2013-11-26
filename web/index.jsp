@@ -3,16 +3,15 @@
     Created on : 19-nov-2013, 13:06:55
     Author     : Gabriel
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ByottaFilms</title>
-    </head>
-    <body>
+<%@page import="Modelo.Peliculas.Pelicula"%>
+<%
+            Pelicula p = new Pelicula(11, "Titulo", "Descripcion", null, null, null);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
+            dispatcher.include(request, response);
+%>
         
-        <h1>Estamos trabajando para hacer la mejor web de recomendaciÃ³n de peliculas EVER!!</h1>
-    </body>
-</html>
+        <h1>Estamos trabajando para hacer la mejor web de recomendación de peliculas EVER!!</h1>
+<%
+            dispatcher = request.getRequestDispatcher("footer.jsp");
+            dispatcher.include(request, response);
+%>
