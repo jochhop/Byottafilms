@@ -7,8 +7,10 @@
 package Controlador;
 
 import Modelo.Ficheros.ScriptFile;
+import Modelo.Peliculas.Pelicula;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,23 +35,15 @@ public class Controlador extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        //request.getSession().setAttribute("scriptfile", sc);
-        
         try {
-            //ScriptFile s2 = new ScriptFile();
-            
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Controlador</title>");            
-            out.println("</head>");
+            Pelicula p = new Pelicula(11, "Titulo", "Descripcion", null, null, null);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
+            dispatcher.include(request, response);
             out.println("<body>");
             out.println("<h1>Servlet Controlador at " + request.getContextPath() + "</h1>");
             out.println("<h1>Servlet Route at " + request.getRequestURI().toString() + "</h1>");
-//            out.println("<h1>Servlet Route at " + s2.getApellido() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println("<h1>Servlet Route at " + p.getTitulo() + "</h1>");
+            out.println("</body></html>");
         } finally {
             out.close();
         }
