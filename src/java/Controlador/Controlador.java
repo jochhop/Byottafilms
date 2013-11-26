@@ -43,7 +43,9 @@ public class Controlador extends HttpServlet {
             out.println("<h1>Servlet Controlador at " + request.getContextPath() + "</h1>");
             out.println("<h1>Servlet Route at " + request.getRequestURI().toString() + "</h1>");
             out.println("<h1>Servlet Route at " + p.getTitulo() + "</h1>");
-            out.println("</body></html>");
+            dispatcher = request.getRequestDispatcher("footer.jsp");
+            dispatcher.include(request, response);
+            //out.println("</body></html>");
         } finally {
             out.close();
         }
