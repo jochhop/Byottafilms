@@ -17,6 +17,12 @@ public class ConjuntoValoraciones {
     ArrayList<Valoracion> listValoraciones;
 
     public ConjuntoValoraciones() {
+        listValoraciones = new ArrayList();
+    }
+    
+    public ConjuntoValoraciones(ArrayList<Valoracion> lValoraciones) {
+        listValoraciones = new ArrayList<Valoracion>();
+        listValoraciones = lValoraciones;
     }
     
     public void addValoracion(int idUser, int idPelicula, float nota){
@@ -26,6 +32,10 @@ public class ConjuntoValoraciones {
     
     public int getNumeroValoraciones(){
         return listValoraciones.size();
+    }
+    
+    public ArrayList<Valoracion> getListValoraciones(){
+        return listValoraciones;
     }
     
 }

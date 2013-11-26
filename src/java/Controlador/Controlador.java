@@ -6,6 +6,7 @@
 
 package Controlador;
 
+import Modelo.Ficheros.ScriptFile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -31,7 +32,12 @@ public class Controlador extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        //request.getSession().setAttribute("scriptfile", sc);
+        
         try {
+            //ScriptFile s2 = new ScriptFile();
+            
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -41,6 +47,7 @@ public class Controlador extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet Controlador at " + request.getContextPath() + "</h1>");
             out.println("<h1>Servlet Route at " + request.getRequestURI().toString() + "</h1>");
+//            out.println("<h1>Servlet Route at " + s2.getApellido() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } finally {

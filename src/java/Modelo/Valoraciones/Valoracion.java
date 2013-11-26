@@ -8,7 +8,6 @@ package Modelo.Valoraciones;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.GregorianCalendar;
 
 /**
  *

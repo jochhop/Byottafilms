@@ -21,7 +21,7 @@ public class GestorPersistencia {
     EntityManager em;
     static GestorPersistencia instancia = null;
     
-    private GestorPersistencia() {
+    public GestorPersistencia() {
         emf = Persistence.createEntityManagerFactory("ByottafilmsPU");
         em = emf.createEntityManager();
     }
