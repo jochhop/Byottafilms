@@ -6,8 +6,6 @@
 
 package Controlador;
 
-import Modelo.Ficheros.ScriptFile;
-import Modelo.Peliculas.Pelicula;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -20,7 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jose
  */
-public class Controlador extends HttpServlet {
+public class Index extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,18 +33,12 @@ public class Controlador extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
         try {
-            Pelicula p = new Pelicula(11, "Titulo", "Descripcion", null, null, null);
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
-            out.println("<body>");
-            out.println("<h1>Servlet Controlador at " + request.getContextPath() + "</h1>");
-            out.println("<h1>Servlet Route at " + request.getRequestURI().toString() + "</h1>");
-            out.println("<h1>Servlet Route at " + p.getTitulo() + "</h1>");
+            out.println("<h1>Bienvenidos a ByottaFilms</h1>");
             dispatcher = request.getRequestDispatcher("footer.jsp");
             dispatcher.include(request, response);
-            //out.println("</body></html>");
         } finally {
             out.close();
         }

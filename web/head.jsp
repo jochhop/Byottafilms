@@ -41,7 +41,9 @@
         <div class="form-group">
         <input type="text" class="form-control" placeholder="Contraseña">
       </div>
-      <button type="submit" class="btn btn-info">Iniciar Sesión</button>
+      <button type="submit" class="btn btn-info" title="Inicia sesión">
+          <span class="glyphicon glyphicon-off"></span>
+      </button>
     </form>
   </div><!-- /.navbar-collapse -->
 </nav>

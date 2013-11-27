@@ -22,25 +22,27 @@ import javax.persistence.Query;
  */
 public class GestorBBDD {
     
-    //GESTIÓN DE CONEXIONES
-    public static void conectarBBDD(){
-        GestorPersistencia.newConexion();
-    }
-    
-    public static void desconectarBBDD(){
-        GestorPersistencia.newConexion();
-    }
-    
     //GESTIÓN DE PELÍCULAS
     public ConjuntoPeliculas selectPeliculas(GestorPersistencia gp){
-        Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Peclicula");
+        Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Pelicula");
+        ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
+        return peliculas;
+    }
+    
+    public ConjuntoPeliculas selectIntervaloPeliculas(GestorPersistencia gp, int ini, int fin){
+        Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Pelicula ORDER BY ID DESC LIMIT "+fin);
         ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
         return peliculas;
     }
     
     public Pelicula selectPeliculaById(GestorPersistencia gp, Pelicula idPelicula){
         return gp.getEntityManager().find(Pelicula.class, idPelicula);
-    }   
+    }
+    
+    public int getNumeroPeliculas(GestorPersistencia gp){
+        Query consulta = gp.getEntityManager().createQuery("SELECT COUNT(*) FROM Pelicula");
+        return (Integer) consulta.getSingleResult();
+    }
     
      //GESTIÓN DE USUARIOS
     public Usuario selectUsuarioById(GestorPersistencia gp, Usuario idUsuario){

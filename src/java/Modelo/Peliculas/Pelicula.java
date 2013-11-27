@@ -22,6 +22,7 @@ public class Pelicula implements Serializable {
     @GeneratedValue
     private int ID;    
     private String titulo;
+    private int anio;
     private String descripcion;
     private String portada;
     private String trailer;
@@ -31,8 +32,9 @@ public class Pelicula implements Serializable {
     public Pelicula(){
     }
 
-    public Pelicula(int id, String titulo, String descripcion, String portada, String trailer, ArrayList<Valoracion> valoraciones) {        
+    public Pelicula(int id, int anio, String titulo, String descripcion, String portada, String trailer, ArrayList<Valoracion> valoraciones) {        
         this.ID = id;
+        this.anio = anio;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.portada = portada;
@@ -40,8 +42,9 @@ public class Pelicula implements Serializable {
         this.valoraciones = valoraciones;
     }
     
-     public Pelicula(int id, String titulo, String descripcion, String portada, String trailer) {        
+     public Pelicula(int id, int anio, String titulo, String descripcion, String portada, String trailer) {        
         this.ID = id;
+        this.anio = anio;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.portada = portada;
@@ -50,6 +53,10 @@ public class Pelicula implements Serializable {
 
     public int getID() {
         return ID;
+    }
+    
+    public int getAnio(){
+        return anio;
     }
 
     public String getTitulo() {
