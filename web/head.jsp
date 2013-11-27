@@ -8,40 +8,41 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="Styles/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" type="text/css" />
         <script src="http://code.jquery.com/jquery.js"></script>
-        <script type="text/javascript" src="Styles/js/bootstrap.js"></script>
+        <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>ByottaFilms</title>
     </head>
     <body>
-    <div class="navbar navbar-inverse nav-bar-fixed-top">
-        <div class="navbar-inner">
-          <div class="container">
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">ByottaFilms</a>
+  </div>
 
-            <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </a>
-
-            <!-- Be sure to leave the brand out there if you want it shown -->
-            <a class="brand" href="/Byottafilms/index">ByottaFilms</a>
-
-            <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse">
-              <!-- .nav, .navbar-search, .navbar-form, etc -->
-            </div>
-            <form class="navbar-search pull-left">
-                <input type="text" class="search-query" placeholder="Buscar película">
-            </form>
-            
-            <form class="navbar-form pull-right">
-                <input type="text" class="span2" name="nick" placeholder="nick">
-                <input type="password" class="span2" name="password" placeholder="contraseña">
-                <button type="submit" class="btn btn-info">Iniciar sesión</button>
-            </form>
-          </div>
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Buscar película">
+      </div>
+    </form>
+    <form class="navbar-form navbar-right">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Nick">
         </div>
-    </div>
+        <div class="form-group">
+        <input type="text" class="form-control" placeholder="Contraseña">
+      </div>
+      <button type="submit" class="btn btn-info">Iniciar Sesión</button>
+    </form>
+  </div><!-- /.navbar-collapse -->
+</nav>
+    </body>
