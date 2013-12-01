@@ -50,6 +50,14 @@ public class Pelicula implements Serializable {
         this.portada = portada;
         this.trailer = trailer;
     }
+     
+    public Pelicula(Pelicula p){
+        this.ID = p.getID();
+        this.anio = p.getAnio();
+        this.descripcion = p.getDescripcion();
+        this.portada = p.getPortada();
+        this.trailer = p.getTrailer();
+    }
 
     public int getID() {
         return ID;

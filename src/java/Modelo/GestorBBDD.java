@@ -22,6 +22,21 @@ import javax.persistence.Query;
  */
 public class GestorBBDD {
     
+    GestorPersistencia gpersistencia = null;
+    
+    public GestorBBDD (){
+        try{
+            GestorPersistencia.newConexion();
+            gpersistencia=GestorPersistencia.instancia();
+        }catch(Exception e){
+            System.out.println("ERROR al abrir base de datos: "+e.getMessage());
+        }
+    }
+    
+    public GestorPersistencia getGestorPersistencia(){
+        return gpersistencia;
+    }
+    
     //GESTIÓN DE PELÍCULAS
     public ConjuntoPeliculas selectPeliculas(GestorPersistencia gp){
         Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Pelicula");
@@ -29,14 +44,24 @@ public class GestorBBDD {
         return peliculas;
     }
     
-    public ConjuntoPeliculas selectIntervaloPeliculas(GestorPersistencia gp, int ini, int fin){
-        Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Pelicula ORDER BY ID DESC LIMIT "+fin);
+    public ConjuntoPeliculas selectIntervaloPeliculas(int ini, int fin){
+        Query consulta = gpersistencia.getEntityManager().createQuery("SELECT * FROM Pelicula ORDER BY ID DESC LIMIT "+fin);
         ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
         return peliculas;
     }
     
-    public Pelicula selectPeliculaById(GestorPersistencia gp, Pelicula idPelicula){
-        return gp.getEntityManager().find(Pelicula.class, idPelicula);
+    public Pelicula selectPeliculaById(GestorPersistencia gp, int idPelicula){
+        Pelicula peli;
+        try{
+            Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Pelicula WHERE ID "+idPelicula);
+            peli = (Pelicula)consulta.getSingleResult();
+            System.out.println("Entra aqui!!!");
+            return peli;
+        }catch(Exception e){
+            System.out.println("ERROR: al obtener la película. "+e.getMessage());
+        }
+        System.out.println("Entra aqui!!!");
+        return null;
     }
     
     public int getNumeroPeliculas(GestorPersistencia gp){
@@ -61,9 +86,13 @@ public class GestorBBDD {
     }
     
     public ConjuntoValoraciones getValoracionesByPelicula(GestorPersistencia gp, int idPelicula){
-        ConjuntoValoraciones valoraciones;
-        Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Valoracion WHERE idPelicula = "+idPelicula);
-        valoraciones = new ConjuntoValoraciones((ArrayList)consulta.getResultList());
+        ConjuntoValoraciones valoraciones = null;
+        try{
+            Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Valoracion WHERE idPelicula = "+idPelicula);
+            valoraciones = new ConjuntoValoraciones((ArrayList)consulta.getResultList());
+        }catch(Exception e){
+            System.out.println("ERROR: al devolver las valoraciones de la película. "+e.getMessage());
+        }
         return valoraciones;
     }
     
