@@ -8,7 +8,7 @@ package Modelo.Peliculas;
 
 import Modelo.Valoraciones.Valoracion;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Map;
 import javax.persistence.*;
 
 /**
@@ -27,12 +27,12 @@ public class Pelicula implements Serializable {
     private String portada;
     private String trailer;
     @OneToMany(cascade=CascadeType.ALL)
-    private ArrayList<Valoracion> valoraciones;
+    private Map<Integer,Valoracion> valoraciones;
     
     public Pelicula(){
     }
 
-    public Pelicula(int id, int anio, String titulo, String descripcion, String portada, String trailer, ArrayList<Valoracion> valoraciones) {        
+    public Pelicula(int id, int anio, String titulo, String descripcion, String portada, String trailer, Map<Integer,Valoracion> valoraciones) {        
         this.ID = id;
         this.anio = anio;
         this.titulo = titulo;
@@ -83,7 +83,7 @@ public class Pelicula implements Serializable {
         return trailer;
     }
 
-    public ArrayList<Valoracion> getValoraciones() {
+    public Map<Integer,Valoracion> getValoraciones() {
         return valoraciones;
     }
     

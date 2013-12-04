@@ -7,7 +7,7 @@ package Modelo.Usuarios;
 
 import Modelo.Valoraciones.Valoracion;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Map;
 import javax.persistence.*;
 
 /**
@@ -28,11 +28,11 @@ public class Usuario implements Serializable {
     private String nick;
     private String avatar;
     @OneToMany(cascade=CascadeType.ALL)
-    private ArrayList<Valoracion> valoraciones;
+    private Map<Integer,Valoracion> valoraciones;
 
     public Usuario(){}
 
-    public Usuario(int id, String nombre, String apellidos, String email, int rol, String password, String nick, String avatar, ArrayList<Valoracion> valoraciones) {
+    public Usuario(int id, String nombre, String apellidos, String email, int rol, String password, String nick, String avatar, Map<Integer,Valoracion> valoraciones) {
         this.ID = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -86,7 +86,7 @@ public class Usuario implements Serializable {
         return avatar;
     }
 
-    public ArrayList<Valoracion> getValoraciones(){
+    public Map<Integer,Valoracion> getValoraciones(){
         return valoraciones;
     }
 }
