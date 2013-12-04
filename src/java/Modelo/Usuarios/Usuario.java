@@ -19,7 +19,7 @@ public class Usuario implements Serializable {
     
     @Id
     @GeneratedValue
-    private int ID;
+    private long ID;
     private String nombre;
     private String apellidos;
     private String email;
@@ -54,7 +54,7 @@ public class Usuario implements Serializable {
         this.avatar = avatar;
     }
     
-    public int getId() {
+    public long getId() {
         return ID;
     }
 

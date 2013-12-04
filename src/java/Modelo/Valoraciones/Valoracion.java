@@ -17,8 +17,8 @@ import javax.persistence.*;
 public class Valoracion implements Serializable{
       
     @Id
-    private int idUsuario;
-    private int idPelicula;
+    private long idUsuario;
+    private long idPelicula;
     private float nota;   
 
     public Valoracion(){}
@@ -33,11 +33,11 @@ public class Valoracion implements Serializable{
         return nota;
     }
     
-    public int getUsuario(){
+    public long getUsuario(){
         return idUsuario;
     }
     
-    public int getPelicula(){
+    public long getPelicula(){
         return idPelicula;
     }
 }
