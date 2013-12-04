@@ -20,19 +20,19 @@ public class Pelicula implements Serializable {
     
     @Id
     @GeneratedValue
-    private int ID;    
+    private long ID;
     private String titulo;
     private int anio;
     private String descripcion;
     private String portada;
     private String trailer;
     @OneToMany(cascade=CascadeType.ALL)
-    private Map<Integer,Valoracion> valoraciones;
+    private Map<Long,Valoracion> valoraciones;
     
     public Pelicula(){
     }
 
-    public Pelicula(int id, int anio, String titulo, String descripcion, String portada, String trailer, Map<Integer,Valoracion> valoraciones) {        
+    public Pelicula(long id, int anio, String titulo, String descripcion, String portada, String trailer, Map<Long,Valoracion> valoraciones) {        
         this.ID = id;
         this.anio = anio;
         this.titulo = titulo;
@@ -42,7 +42,7 @@ public class Pelicula implements Serializable {
         this.valoraciones = valoraciones;
     }
     
-     public Pelicula(int id, int anio, String titulo, String descripcion, String portada, String trailer) {        
+     public Pelicula(long id, int anio, String titulo, String descripcion, String portada, String trailer) {        
         this.ID = id;
         this.anio = anio;
         this.titulo = titulo;
@@ -59,7 +59,7 @@ public class Pelicula implements Serializable {
         this.trailer = p.getTrailer();
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
     
@@ -83,7 +83,7 @@ public class Pelicula implements Serializable {
         return trailer;
     }
 
-    public Map<Integer,Valoracion> getValoraciones() {
+    public Map<Long,Valoracion> getValoraciones() {
         return valoraciones;
     }
     
