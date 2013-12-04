@@ -9,6 +9,7 @@ package Controlador;
 import Modelo.GestorBBDD;
 import Modelo.Peliculas.ConjuntoPeliculas;
 import Modelo.Peliculas.Pelicula;
+import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -38,15 +39,16 @@ public class Index extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        GestorBBDD gbb = new GestorBBDD();
-        request.getSession().setAttribute("gbb", gbb);
+        //GestorBBDD gbb = new GestorBBDD();
+        GestorPersistencia.newConexion();
+        //request.getSession().setAttribute("gbb", gbb);
       
         try {
-            Pelicula pelicula = new Pelicula(gbb.selectPeliculaById(gbb.getGestorPersistencia(), 12));
+            //Pelicula pelicula = new Pelicula(gbb.selectPeliculaById(gbb.getGestorPersistencia(), 12));
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
             out.println("<h1>Bienvenidos a ByottaFilms</h1>");
-            out.println("<p>Pelicula con nombre: "+pelicula.getTitulo()+"</p>");
+            //out.println("<p>Pelicula con nombre: "+pelicula.getTitulo()+"</p>");
             dispatcher = request.getRequestDispatcher("footer.jsp");
             dispatcher.include(request, response);
         } finally {
