@@ -49,8 +49,8 @@ public class Index extends HttpServlet {
         ArrayList<Usuario> au = new ArrayList<Usuario>();
         Cargadatos cd = new Cargadatos(GestorPersistencia.instancia());
          
-         cd.cargarPeliculas("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\peliculas2.csv", ap);
-         cd.cargarValoraciones("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\ratings7.csv", ap, au);
+         cd.cargarPeliculas("src/java/recursos/peliculas2.csv", ap);
+         cd.cargarValoraciones("src/java/Recursos/ratings7.csv", ap, au);
         //request.getSession().setAttribute("gbb", gbb);
       
         try {
