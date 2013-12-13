@@ -46,4 +46,6 @@
       </button>
     </form>
   </div><!-- /.navbar-collapse -->
-</nav>  
+</nav>
+    </body>
+    <div class="container">
