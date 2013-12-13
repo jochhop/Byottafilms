@@ -29,6 +29,7 @@ public class Usuario implements Serializable {
     private String avatar;
     @OneToMany(cascade=CascadeType.ALL)
     private Map<Long,Valoracion> valoraciones;
+    private double media;
 
     public Usuario(){}
 
@@ -105,4 +106,9 @@ public class Usuario implements Serializable {
     public Map<Long,Valoracion> getValoraciones(){
         return valoraciones;
     }
+
+    public double getMedia() {
+        return media;
+    }
+    
 }

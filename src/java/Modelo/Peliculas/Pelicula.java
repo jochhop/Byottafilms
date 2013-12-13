@@ -28,6 +28,7 @@ public class Pelicula implements Serializable {
     private String trailer;
     @OneToMany(cascade=CascadeType.ALL)
     private Map<Long,Valoracion> valoraciones;
+    private double media;
     
     public Pelicula(){
     }
@@ -99,6 +100,10 @@ public class Pelicula implements Serializable {
         valoraciones.put(ID, val);        
         //valoraciones.put(val.getUsuario(), val);
         
+    }
+
+    public double getMedia() {
+        return media;
     }
     
     
