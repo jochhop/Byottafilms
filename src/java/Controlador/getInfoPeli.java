@@ -22,12 +22,16 @@ public class getInfoPeli {
         String urlTrailer;
         String urlPoster;
         String descripcion;
+        String actores;
+        String director;
+        String estilo;
+        String guionista;
         
         public getInfoPeli(String nombrepeli) throws MalformedURLException, IOException{
             String urlaux2;
             String urlaux3;
             urlaux2 = "http://gdata.youtube.com/feeds/api/videos?"
-                    + "q="+nombrepeli.toString().replaceAll(" ", "+")+"official+trailer"
+                    + "q="+nombrepeli.toString().replaceAll(" ", "+")+"official+trailer+movie"
                     + "&max-results=1"
                     + "&alt=json";
             
@@ -70,18 +74,48 @@ public class getInfoPeli {
             //JSONObject auxson = new JSONObject(json.getJSONObject("responseData").getJSONArray("results").get(0).toString());
             
             JSONObject json2 = new JSONObject(builder2.toString());
-            JSONObject auxson2 = new JSONObject(json2.getJSONObject("feed").getJSONArray("entry").get(0).toString());
-            JSONObject auxson3 = new JSONObject(auxson2.getJSONArray("link").get(0).toString());
-           
+            System.out.println("el json 2: "+json2.toString());
+            if(!json2.getJSONObject("feed").isNull("entry")){
+                JSONObject auxson2 = new JSONObject(json2.getJSONObject("feed").getJSONArray("entry").get(0).toString());
+                JSONObject auxson3 = new JSONObject(auxson2.getJSONArray("link").get(0).toString());
+                urlTrailer=auxson3.getString("href").replaceAll("&feature=youtube_gdata", "").toString();
+                urlTrailer=urlTrailer.substring(31);
+            }else{
+                urlTrailer="";
+            }
+
             JSONObject json3 = new JSONObject(builder3.toString());
+            System.out.println("json3 es "+json3.toString());
+            if(!json3.isNull("Poster")){
+                urlPoster=json3.getString("Poster").toString();
+                descripcion=json3.getString("Plot").toString();
+                actores=json3.getString("Actors").toString();
+                estilo=json3.getString("Genre").toString();
+                director=json3.getString("Director").toString();
+                guionista=json3.getString("Writer").toString();
+            }else{
+                urlPoster="";
+                descripcion="";
+                actores="";
+                estilo="";
+                director="";
+                guionista="";
+            }
             
-            urlTrailer=auxson3.getString("href").replaceAll("&feature=youtube_gdata", "").toString();
-            //System.out.println(json3.toString());
-            urlPoster=json3.getString("Poster").toString();
-            descripcion=json3.getString("Plot").toString();
         }
         
         public String getPoster(){return urlPoster;}
         public String getTrailer(){return urlTrailer;}
         public String getDescripcion(){return descripcion;}
+        public String getActores(){return actores;}
+        public String getEstilo(){return estilo;}
+        public String getDirector(){return director;}
+        public String getGuionista(){return guionista;}
+        public void setPoster(String poster){urlPoster=poster;}
+        public void setTrailer(String trailer){urlTrailer=trailer;}
+        public void setDescripcion(String desc){descripcion=desc;}
+        public void setActores(String act){actores=act;}
+        public void setEstilo(String est){estilo=est;}
+        public void setDirector(String dir){director=dir;}
+        public void setGuionista(String gui){guionista=gui;}
 }
