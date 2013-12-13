@@ -17,19 +17,28 @@ import javax.persistence.*;
 public class Valoracion implements Serializable{
       
     @Id
+    @GeneratedValue
+    private long ID;
     private long idUsuario;
     private long idPelicula;
-    private float nota;   
+    private int nota;   
 
     public Valoracion(){}
     
-    public Valoracion(float nota, int idUsuario, int idPelicula) {
+     public Valoracion(int nota, long idUsuario, long idPelicula) {        
+        this.nota = nota;
+        this.idUsuario = idUsuario;
+        this.idPelicula = idPelicula;
+    }
+    
+    public Valoracion(long id,int nota, long idUsuario, long idPelicula) {
+        this.ID = id;
         this.nota = nota;
         this.idUsuario = idUsuario;
         this.idPelicula = idPelicula;
     }
 
-    public float getNota() {
+    public int getNota() {
         return nota;
     }
     

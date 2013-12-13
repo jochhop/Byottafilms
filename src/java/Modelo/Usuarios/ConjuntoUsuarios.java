@@ -7,6 +7,7 @@
 package Modelo.Usuarios;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -41,11 +42,16 @@ public class ConjuntoUsuarios {
         return true;
     }
     
-    public boolean closeSesion(int idUsuario){
+    public boolean closeSesion(long idUsuario){
         return true;
     }
     
     public void deleteUsuario(int idUsuario){
+        Iterator<Usuario> it = listUsuarios.iterator();
+        
+        while(it.hasNext()){
+            
+        }
         if(listUsuarios.remove(listUsuarios.get(idUsuario))){
             //TODO
         }else{

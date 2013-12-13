@@ -6,9 +6,11 @@
 
 package Controlador;
 
+import Modelo.Cargadatos;
 import Modelo.GestorBBDD;
 import Modelo.Peliculas.ConjuntoPeliculas;
 import Modelo.Peliculas.Pelicula;
+import Modelo.Usuarios.Usuario;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,15 +42,23 @@ public class Index extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         //GestorBBDD gbb = new GestorBBDD();
+       
+        
         GestorPersistencia.newConexion();
+        ArrayList<Pelicula> ap = new ArrayList<Pelicula>();
+        ArrayList<Usuario> au = new ArrayList<Usuario>();
+        Cargadatos cd = new Cargadatos(GestorPersistencia.instancia());
+         
+         cd.cargarPeliculas("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\peliculas2.csv", ap);
+         cd.cargarValoraciones("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\ratings7.csv", ap, au);
         //request.getSession().setAttribute("gbb", gbb);
       
         try {
-            //Pelicula pelicula = new Pelicula(gbb.selectPeliculaById(gbb.getGestorPersistencia(), 12));
+            Pelicula pelicula = new Pelicula(3,2013,"Ensalada de pepino en el colegiofemenino","alumnas hots","","");            
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
             out.println("<h1>Bienvenidos a ByottaFilms</h1>");
-            //out.println("<p>Pelicula con nombre: "+pelicula.getTitulo()+"</p>");
+            out.println("<p>Pelicula con nombre: "+pelicula.getTitulo()+"</p>");
             dispatcher = request.getRequestDispatcher("footer.jsp");
             dispatcher.include(request, response);
         } finally {

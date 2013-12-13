@@ -25,7 +25,7 @@ public class ConjuntoValoraciones {
         listValoraciones = lValoraciones;
     }
     
-    public void addValoracion(int idUser, int idPelicula, float nota){
+    public void addValoracion(int idUser, int idPelicula, int nota){
         Valoracion valoracion = new Valoracion(nota, idUser, idPelicula);
         listValoraciones.add(valoracion);
     }

@@ -7,6 +7,7 @@ package Modelo.Usuarios;
 
 import Modelo.Valoraciones.Valoracion;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.*;
 
@@ -17,8 +18,7 @@ import javax.persistence.*;
 @Entity(name="Usuarios")
 public class Usuario implements Serializable {
     
-    @Id
-    @GeneratedValue
+    @Id    
     private long ID;
     private String nombre;
     private String apellidos;
@@ -28,11 +28,11 @@ public class Usuario implements Serializable {
     private String nick;
     private String avatar;
     @OneToMany(cascade=CascadeType.ALL)
-    private Map<Integer,Valoracion> valoraciones;
+    private Map<Long,Valoracion> valoraciones;
 
     public Usuario(){}
 
-    public Usuario(int id, String nombre, String apellidos, String email, int rol, String password, String nick, String avatar, Map<Integer,Valoracion> valoraciones) {
+    public Usuario(long id, String nombre, String apellidos, String email, int rol, String password, String nick, String avatar, Map<Long,Valoracion> valoraciones) {
         this.ID = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -42,6 +42,18 @@ public class Usuario implements Serializable {
         this.nick = nick;
         this.avatar = avatar;
         this.valoraciones = valoraciones;
+    }
+    
+        public Usuario(long id) {
+        this.ID = id;
+        this.nombre = "";
+        this.apellidos = "";
+        this.email = "";
+        this.rol = 0;
+        this.password = "";
+        this.nick = "";
+        this.avatar = "";
+        this.valoraciones = new HashMap<Long, Valoracion>();
     }
     
     public Usuario(String nombre, String apellidos, String email, int rol, String password, String nick, String avatar){
@@ -86,7 +98,11 @@ public class Usuario implements Serializable {
         return avatar;
     }
 
-    public Map<Integer,Valoracion> getValoraciones(){
+    public void setValoracion(Valoracion val){        
+        valoraciones.put(ID, val);        
+    }
+    
+    public Map<Long,Valoracion> getValoraciones(){
         return valoraciones;
     }
 }

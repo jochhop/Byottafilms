@@ -8,6 +8,7 @@ package Modelo.Peliculas;
 
 import Modelo.Valoraciones.Valoracion;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.*;
 
@@ -18,8 +19,7 @@ import javax.persistence.*;
 @Entity(name="Peliculas")
 public class Pelicula implements Serializable {    
     
-    @Id
-    @GeneratedValue
+    @Id   
     private long ID;
     private String titulo;
     private int anio;
@@ -41,14 +41,21 @@ public class Pelicula implements Serializable {
         this.trailer = trailer;
         this.valoraciones = valoraciones;
     }
-    
-     public Pelicula(long id, int anio, String titulo, String descripcion, String portada, String trailer) {        
+
+    public Pelicula(long ID, String titulo, int anio) {
+        this.ID = ID;
+        this.titulo = titulo;
+        this.anio = anio;
+    }
+        
+    public Pelicula(long id, int anio, String titulo, String descripcion, String portada, String trailer) {        
         this.ID = id;
         this.anio = anio;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.portada = portada;
         this.trailer = trailer;
+        this.valoraciones = new HashMap<Long, Valoracion>();
     }
      
     public Pelicula(Pelicula p){
@@ -85,6 +92,13 @@ public class Pelicula implements Serializable {
 
     public Map<Long,Valoracion> getValoraciones() {
         return valoraciones;
+    }
+
+    public void setValoracion(Valoracion val){
+        
+        valoraciones.put(ID, val);        
+        //valoraciones.put(val.getUsuario(), val);
+        
     }
     
     
