@@ -15,6 +15,8 @@ import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -45,20 +47,38 @@ public class Index extends HttpServlet {
        
         
         GestorPersistencia.newConexion();
-        ArrayList<Pelicula> ap = new ArrayList<Pelicula>();
-        ArrayList<Usuario> au = new ArrayList<Usuario>();
-        Cargadatos cd = new Cargadatos(GestorPersistencia.instancia());
+//ArrayList<Pelicula> ap = new ArrayList<Pelicula>();
+        //ArrayList<Usuario> au = new ArrayList<Usuario>();
+        //Cargadatos cd = new Cargadatos(GestorPersistencia.instancia());
          
-         cd.cargarPeliculas("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\peliculas2.csv", ap);
-         cd.cargarValoraciones("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\ratings7.csv", ap, au);
+         //cd.cargarPeliculas("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/peliculas2.csv", ap);
+         //cd.cargarValoraciones("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/ratings7.csv", ap, au);
         //request.getSession().setAttribute("gbb", gbb);
       
         try {
-            Pelicula pelicula = new Pelicula(3,2013,"Ensalada de pepino en el colegiofemenino","alumnas hots","","");            
+            int min=Integer.parseInt(request.getParameter("min"));
+            int max=Integer.parseInt(request.getParameter("max"));
+            if(min==0 && max==0){
+                min=0;
+                max=10;
+            }
+            System.out.println("esto es min "+min+" esto es max"+max);
+            List<Pelicula> pelis=new ArrayList<Pelicula>();
+            int numPelis;
+            Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE (p.ID>"+min+" AND p.ID<="+max+")");
+            pelis=consulta.getResultList();
+            Query consulta2=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p");
+            numPelis=consulta2.getResultList().size();
+//Pelicula pelicula = new Pelicula(3,2013,"Ensalada de pepino en el colegiofemenino","alumnas hots","","");            
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
-            out.println("<h1>Bienvenidos a ByottaFilms</h1>");
-            out.println("<p>Pelicula con nombre: "+pelicula.getTitulo()+"</p>");
+            request.setAttribute("pelis",pelis);
+            request.setAttribute("numPelis",numPelis);
+            System.out.println("numero de pelis" + numPelis);
+            //out.println("<h1>Bienvenidos a ByottaFilms</h1>");
+            //out.println("<p>Pelicula con nombre: "+pelicula.getTitulo()+"</p>");
+            dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.include(request, response);
             dispatcher = request.getRequestDispatcher("footer.jsp");
             dispatcher.include(request, response);
         } finally {

@@ -4,9 +4,17 @@
         <servlet-name>Index</servlet-name>
         <servlet-class>Controlador.Index</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>pelicula</servlet-name>
+        <servlet-class>Controlador.pelicula</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Index</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>pelicula</servlet-name>
+        <url-pattern>/pelicula</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

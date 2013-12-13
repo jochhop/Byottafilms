@@ -108,7 +108,7 @@ public class Cargadatos implements Serializable{
                 Usuario tempu;
                 System.out.println("cargando valoraciones...");
                 gestor.getEntityManager().getTransaction().begin();
-		while (((line2 = br2.readLine()) != null) && i<200) {
+		while (((line2 = br2.readLine()) != null)) {
                         String[] cadenavaloracion = line2.split(",");
                         int indicePel = Integer.parseInt(cadenavaloracion[1]);
                         long indiceUsu = (long)Integer.parseInt(cadenavaloracion[0]);
