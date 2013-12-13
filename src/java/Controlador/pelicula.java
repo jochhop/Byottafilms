@@ -6,8 +6,14 @@
 
 package Controlador;
 
+import Modelo.Peliculas.Pelicula;
+import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Query;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,16 +39,18 @@ public class pelicula extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet pelicula</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet pelicula at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            Pelicula peli=new Pelicula();
+            Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE p.ID="+request.getParameter("id"));
+            peli=(Pelicula) consulta.getSingleResult();
+            getInfoPeli info = new getInfoPeli(peli.getTitulo());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
+            dispatcher.include(request, response);
+            request.setAttribute("peli",peli);
+            request.setAttribute("info",info);
+            dispatcher = request.getRequestDispatcher("pelicula.jsp");
+            dispatcher.include(request, response);
+            dispatcher = request.getRequestDispatcher("footer.jsp");
+            dispatcher.include(request, response);
         } finally {
             out.close();
         }

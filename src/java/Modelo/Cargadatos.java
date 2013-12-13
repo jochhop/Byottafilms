@@ -18,13 +18,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityExistsException;
 
 /**
@@ -62,13 +55,18 @@ public class Cargadatos implements Serializable{
                 
 		while ((line = br.readLine()) != null) {
 			String[] peli = line.split("\t");
-                            temp = new Pelicula((long)Integer.parseInt(peli[0]),0,peli[2],"","","");
-                            //System.out.println("id |" + Integer.parseInt(peli[0]) + "| Nombre: |" + peli[2] + "| anno: |0|");
+                            if(peli[1].contains("NULL")){
+                                temp = new Pelicula((long)Integer.parseInt(peli[0]),0,peli[2]);
+                            }else{
+                                temp = new Pelicula((long)Integer.parseInt(peli[0]),Integer.parseInt(peli[1]),peli[2]);
+                            }
+                            //System.out.println("id |" + (long)Integer.parseInt(peli[0]) + "| Nombre: |" + peli[2] + "| anno: " + Integer.parseInt(peli[1]));
                                                         
                             gestor.getEntityManager().persist(temp);                            
                             
                             pelis.add(temp);
                             peli[0]="0";peli[1]="0";peli[2]="";
+                        
 		}             
                 gestor.getEntityManager().getTransaction().commit();
                 System.out.println("peliculas cargadas");
