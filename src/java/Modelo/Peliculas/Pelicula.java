@@ -42,10 +42,11 @@ public class Pelicula implements Serializable {
         this.valoraciones = valoraciones;
     }
 
-    public Pelicula(long ID, String titulo, int anio) {
+    public Pelicula(long ID, int anio, String titulo) {
         this.ID = ID;
         this.titulo = titulo;
         this.anio = anio;
+        this.valoraciones = new HashMap<Long, Valoracion>();
     }
         
     public Pelicula(long id, int anio, String titulo, String descripcion, String portada, String trailer) {        

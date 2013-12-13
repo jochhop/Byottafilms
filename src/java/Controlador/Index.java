@@ -7,14 +7,14 @@
 package Controlador;
 
 import Modelo.Cargadatos;
-import Modelo.GestorBBDD;
-import Modelo.Peliculas.ConjuntoPeliculas;
 import Modelo.Peliculas.Pelicula;
 import Modelo.Usuarios.Usuario;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -45,20 +45,24 @@ public class Index extends HttpServlet {
        
         
         GestorPersistencia.newConexion();
-        ArrayList<Pelicula> ap = new ArrayList<Pelicula>();
+        /*ArrayList<Pelicula> ap = new ArrayList<Pelicula>();
         ArrayList<Usuario> au = new ArrayList<Usuario>();
         Cargadatos cd = new Cargadatos(GestorPersistencia.instancia());
          
          cd.cargarPeliculas("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\peliculas2.csv", ap);
          cd.cargarValoraciones("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\ratings7.csv", ap, au);
         //request.getSession().setAttribute("gbb", gbb);
-      
+        */
         try {
-            Pelicula pelicula = new Pelicula(3,2013,"Ensalada de pepino en el colegiofemenino","alumnas hots","","");            
+            //Pelicula pelicula = new Pelicula(3,2013,"Ensalada de pepino en el colegiofemenino","alumnas hots","","");            
+            List<Pelicula> p = new ArrayList<Pelicula>();
+            String titulo = "Boycott";
+            Query resul = GestorPersistencia.instancia().getEntityManager().createQuery("Select p from Peliculas p where p.titulo=:titulo").setParameter("titulo", titulo);
+            p = resul.getResultList();
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
             out.println("<h1>Bienvenidos a ByottaFilms</h1>");
-            out.println("<p>Pelicula con nombre: "+pelicula.getTitulo()+"</p>");
+            out.println("<p>Pelicula con nombre: "+p.get(0).getTitulo()+"</p>");
             dispatcher = request.getRequestDispatcher("footer.jsp");
             dispatcher.include(request, response);
         } finally {
