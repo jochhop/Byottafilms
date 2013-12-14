@@ -6,6 +6,7 @@
 
 package Controlador;
 
+import Modelo.GestorBBDD;
 import Modelo.Peliculas.Pelicula;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
@@ -39,34 +40,9 @@ public class pelicula extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            Pelicula peli=new Pelicula();
-            Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE p.ID="+request.getParameter("id"));
-            peli=(Pelicula) consulta.getSingleResult();
-            System.out.println("Titulo de la peli: "+peli.getTitulo());
+            Pelicula peli;
+            peli=GestorBBDD.selectPeliculaById(GestorPersistencia.instancia(), request.getParameter("id").toString());
             getInfoPeli info = new getInfoPeli(peli.getTitulo());
-            if(info.getDescripcion().isEmpty()){
-                info.setDescripcion("No hay descripción disponible para esta película.");
-            }
-            if(info.getPoster().isEmpty()){
-                info.setPoster("http://www.51allout.co.uk/wp-content/uploads/2012/02/Image-not-found.gif");
-            }
-            if(info.getTrailer().isEmpty()){
-                info.setTrailer("No hay trailer disponible para esta película.");
-            }else{
-                info.setTrailer("<iframe width=\"540\" height=\"290\" src=\"//www.youtube.com/embed/"+info.getTrailer()+"\" frameborder=\"0\" allowfullscreen></iframe>");
-            }
-            if(info.getActores().isEmpty()){
-                info.setActores("No hay información sobre los actores en esta película.");
-            }
-            if(info.getEstilo().isEmpty()){
-                info.setEstilo("No hay información sobre el género de esta película.");
-            }
-            if(info.getDirector().isEmpty()){
-                info.setDirector("No hay información sobre el director de esta película.");
-            }
-            if(info.getGuionista().isEmpty()){
-                info.setGuionista("No hay información sobre el guionista de esta película.");
-            }
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
             request.setAttribute("peli",peli);

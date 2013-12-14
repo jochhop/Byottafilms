@@ -9,7 +9,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" type="text/css" />
-        <link rel="stylesheet" href="Styles/mystyle.css" type="text/css" />
+        <link rel="stylesheet" href="Styles//mystyle.css" type="css" />
         <script src="http://code.jquery.com/jquery.js"></script>
         <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -35,12 +35,12 @@
         <input type="text" class="form-control" placeholder="Buscar película">
       </div>
     </form>
-    <form class="navbar-form navbar-right">
+    <form class="navbar-form navbar-right" method="POST" action="/Byottafilms/login">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Nick">
+        <input type="text" class="form-control" placeholder="Nick" name="usuario">
         </div>
         <div class="form-group">
-        <input type="text" class="form-control" placeholder="Contraseña">
+        <input type="password" class="form-control" placeholder="Contraseña" name="password">
       </div>
       <button type="submit" class="btn btn-info" title="Inicia sesión">
           <span class="glyphicon glyphicon-off"></span>

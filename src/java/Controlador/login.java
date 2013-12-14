@@ -8,19 +8,21 @@ package Controlador;
 
 import Modelo.GestorBBDD;
 import Modelo.Peliculas.Pelicula;
+import Modelo.Usuarios.Usuario;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Query;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class Index extends HttpServlet {
+/**
+ *
+ * @author jose
+ */
+public class login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,31 +37,23 @@ public class Index extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-   
-       GestorPersistencia.newConexion();
-       try {
-            int min, max;
-            if(request.getParameterNames().hasMoreElements()){
-                min=Integer.parseInt(request.getParameter("min"));
-                max=Integer.parseInt(request.getParameter("max"));           
-            }else{
-                min=0;
-                max=10;
-            }
-            
-            List<Pelicula> pelis=new ArrayList<Pelicula>();
-            int numPelis;
-            pelis=GestorBBDD.getPeliculasIntervalo(GestorPersistencia.instancia(), min, max);
-            Query consulta2=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p");
-            numPelis=consulta2.getResultList().size();
-            RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
-            dispatcher.include(request, response);
-            request.setAttribute("pelis",pelis);
-            request.setAttribute("numPelis",numPelis);
-            dispatcher = request.getRequestDispatcher("index.jsp");
-            dispatcher.include(request, response);
-            dispatcher = request.getRequestDispatcher("footer.jsp");
-            dispatcher.include(request, response);
+        try {
+            Usuario user=new Usuario();
+            String usuario=request.getParameter("usuario");
+            String passwrod=request.getParameter("password");
+            //user=GestorBBDD.selecUsuarioByNick(GestorPersistencia.instancia(), usuario);
+            Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT u FROM Usuarios u WHERE u.nick="+usuario);
+            user=(Usuario)consulta.getSingleResult();
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet login</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet login at "+ user.getNombre() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         } finally {
             out.close();
         }

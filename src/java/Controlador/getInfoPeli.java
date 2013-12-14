@@ -41,24 +41,17 @@ public class getInfoPeli {
             URL urlv = new URL(urlaux2);
             URL urlf = new URL(urlaux3);
             
-            //URLConnection connection = url.openConnection();
             URLConnection connection2 = urlv.openConnection();
             URLConnection connection3 = urlf.openConnection();
             
-            //connection.addRequestProperty("Referer", "http://localhost/");
             connection2.addRequestProperty("Referer", "http://localhost/");
             connection3.addRequestProperty("Referer", "http://localhost/");
             
             String line;
             
-            //StringBuilder builder = new StringBuilder();
             StringBuilder builder2 = new StringBuilder();
             StringBuilder builder3 = new StringBuilder();
-            
-            /*BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            while((line = reader.readLine()) != null) {
-                    builder.append(line);
-            }*/
+
             
             BufferedReader reader2 = new BufferedReader(new InputStreamReader(connection2.getInputStream()));
             while((line = reader2.readLine()) != null) {
@@ -70,22 +63,20 @@ public class getInfoPeli {
                     builder3.append(line);
             }
 
-            //JSONObject json = new JSONObject(builder.toString());
-            //JSONObject auxson = new JSONObject(json.getJSONObject("responseData").getJSONArray("results").get(0).toString());
-            
             JSONObject json2 = new JSONObject(builder2.toString());
-            System.out.println("el json 2: "+json2.toString());
+
             if(!json2.getJSONObject("feed").isNull("entry")){
                 JSONObject auxson2 = new JSONObject(json2.getJSONObject("feed").getJSONArray("entry").get(0).toString());
                 JSONObject auxson3 = new JSONObject(auxson2.getJSONArray("link").get(0).toString());
                 urlTrailer=auxson3.getString("href").replaceAll("&feature=youtube_gdata", "").toString();
                 urlTrailer=urlTrailer.substring(31);
+                urlTrailer="<iframe width=\"540\" height=\"290\" src=\"//www.youtube.com/embed/"+urlTrailer+"\" frameborder=\"0\" allowfullscreen></iframe>";
             }else{
-                urlTrailer="";
+                urlTrailer="No hay trailer disponible para esta película.";
             }
 
             JSONObject json3 = new JSONObject(builder3.toString());
-            System.out.println("json3 es "+json3.toString());
+
             if(!json3.isNull("Poster")){
                 urlPoster=json3.getString("Poster").toString();
                 descripcion=json3.getString("Plot").toString();
@@ -94,12 +85,12 @@ public class getInfoPeli {
                 director=json3.getString("Director").toString();
                 guionista=json3.getString("Writer").toString();
             }else{
-                urlPoster="";
-                descripcion="";
-                actores="";
-                estilo="";
-                director="";
-                guionista="";
+                urlPoster="http://www.51allout.co.uk/wp-content/uploads/2012/02/Image-not-found.gif";
+                descripcion="No hay descripción disponible para esta película.";
+                actores="No hay información sobre los actores en esta película.";
+                estilo="No hay información sobre el género de esta película.";
+                director="No hay información sobre el director de esta película.";
+                guionista="No hay información sobre el guionista de esta película.";
             }
             
         }
