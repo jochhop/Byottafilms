@@ -6,15 +6,18 @@
 
 package Controlador;
 
+import Modelo.Algoritmos;
 import Modelo.Cargadatos;
 import Modelo.GestorBBDD;
 import Modelo.Peliculas.ConjuntoPeliculas;
 import Modelo.Peliculas.Pelicula;
+import Modelo.Recomendacion;
 import Modelo.Usuarios.Usuario;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
