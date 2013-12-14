@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -39,21 +40,33 @@ public class login extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             Usuario user=new Usuario();
+            String message="";
             String usuario=request.getParameter("usuario");
-            String passwrod=request.getParameter("password");
+            String password=request.getParameter("password");
             //user=GestorBBDD.selecUsuarioByNick(GestorPersistencia.instancia(), usuario);
-            Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT u FROM Usuarios u WHERE u.nick="+usuario);
-            user=(Usuario)consulta.getSingleResult();
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet login</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet login at "+ user.getNombre() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            user=GestorBBDD.selecUsuarioByNick(GestorPersistencia.instancia(), usuario);
+            HttpSession nueva_sesion = request.getSession(true);
+            if(user!=null){
+                if(user.getPassword().contains(password)){
+                    message="<div class=\"alert alert-success fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "Hola <strong>"+user.getNombre()+"</strong>! te has logueado con éxito :D</div>";
+                    
+                }else{
+                    message="<div class=\"alert alert-danger fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "El nick o la contraseña son incorrectos.</div>";
+                }
+                nueva_sesion.setAttribute("user", user);
+                nueva_sesion.setAttribute("message", message);
+                response.sendRedirect("/Byottafilms/");
+            }else{
+                message="<div class=\"alert alert-danger fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "El nick o la contraseña son incorrectos.</div>";
+                nueva_sesion.setAttribute("message", message);
+                response.sendRedirect("/Byottafilms/");
+            }
         } finally {
             out.close();
         }
