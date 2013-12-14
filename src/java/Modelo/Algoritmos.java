@@ -24,7 +24,7 @@ import java.util.TreeSet;
  *
  * @author Marci
  */
-public class Algortimos {
+public class Algoritmos {
  
     public void ejecucionTrainingCoseno(int k, ArrayList<Pelicula> peliculas) throws ErrorDatoNoValido, IOException {
         
@@ -185,7 +185,7 @@ public class Algortimos {
         return modelo_similitud;
     }
          
-   public List<Recomendacion> getRecomendaciones( Usuario u,int n, HashMap<Long, TreeSet<ItemSim>> modeloSimilitud, GestorPersistencia instancia){
+   public List<Recomendacion> getRecomendaciones( Usuario u, HashMap<Long, TreeSet<ItemSim>> modeloSimilitud, GestorPersistencia instancia){
         List<Recomendacion> recom_list = new ArrayList();
         GestorBBDD gestor = new GestorBBDD();
         
