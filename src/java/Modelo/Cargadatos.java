@@ -8,6 +8,7 @@ package Modelo;
 
 
 import Modelo.Peliculas.Pelicula;
+import Modelo.Usuarios.ConjuntoUsuarios;
 import Modelo.Usuarios.Usuario;
 import Modelo.Valoraciones.Valoracion;
 import Persistencia.GestorPersistencia;
@@ -19,12 +20,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityExistsException;
 
 /**
@@ -62,13 +59,18 @@ public class Cargadatos implements Serializable{
                 
 		while ((line = br.readLine()) != null) {
 			String[] peli = line.split("\t");
-                            temp = new Pelicula((long)Integer.parseInt(peli[0]),0,peli[2],"","","");
-                            //System.out.println("id |" + Integer.parseInt(peli[0]) + "| Nombre: |" + peli[2] + "| anno: |0|");
+                            if(peli[1].contains("NULL")){
+                                temp = new Pelicula((long)Integer.parseInt(peli[0]),0,peli[2]);
+                            }else{
+                                temp = new Pelicula((long)Integer.parseInt(peli[0]),Integer.parseInt(peli[1]),peli[2]);
+                            }
+                            //System.out.println("id |" + (long)Integer.parseInt(peli[0]) + "| Nombre: |" + peli[2] + "| anno: " + Integer.parseInt(peli[1]));
                                                         
                             gestor.getEntityManager().persist(temp);                            
                             
                             pelis.add(temp);
                             peli[0]="0";peli[1]="0";peli[2]="";
+                        
 		}             
                 gestor.getEntityManager().getTransaction().commit();
                 System.out.println("peliculas cargadas");
@@ -93,13 +95,12 @@ public class Cargadatos implements Serializable{
 	}
     }
    
-    public void cargarValoraciones(String archivo, ArrayList<Pelicula> pelis, ArrayList<Usuario> usuarios)
+    public void cargarValoraciones(String archivo, ArrayList<Pelicula> pelis, ConjuntoUsuarios usuarios)
     {
         BufferedReader br2 = null;
         String line2 = "";
         int i = 0;
         int j=0;                     
-        HashMap <Long, Usuario> comprobacion = new HashMap<Long, Usuario>();
                 
 	try {                
                 br2 = new BufferedReader(new FileReader(archivo));
@@ -108,22 +109,22 @@ public class Cargadatos implements Serializable{
                 Usuario tempu;
                 System.out.println("cargando valoraciones...");
                 gestor.getEntityManager().getTransaction().begin();
-		while (((line2 = br2.readLine()) != null) && i<200) {
+		while (((line2 = br2.readLine()) != null)) {
                         String[] cadenavaloracion = line2.split(",");
-                        int indicePel = Integer.parseInt(cadenavaloracion[1]);
+                        long indicePel = Integer.parseInt(cadenavaloracion[1]);
                         long indiceUsu = (long)Integer.parseInt(cadenavaloracion[0]);
                         tempv = new Valoracion(Integer.parseInt(cadenavaloracion[2]),indiceUsu,indicePel);
-                        tempu = new Usuario(indiceUsu);
-                        if(comprobacion.containsKey(indiceUsu)){
-                            comprobacion.get(indiceUsu).setValoracion(tempv);                            
-                        }else{                            
-                            tempu.setValoracion(tempv);
-                            usuarios.add(tempu);
-                            comprobacion.put(indiceUsu, tempu);
+                        if(usuarios.getUsuarioById(indiceUsu)!=null){
+                            usuarios.getUsuarioById(indiceUsu).getValoraciones().put(indicePel, tempv);
+                        }else{  
+                            tempu = new Usuario(indiceUsu);
+                            tempu.getValoraciones().put(indicePel, tempv);
+                            usuarios.newUsuario(tempu);
                             gestor.getEntityManager().persist(tempu);
+                            j++;
                         }                                                                       
                         gestor.getEntityManager().persist(tempv);
-                        pelis.get(indicePel-1).setValoracion(tempv);
+                        pelis.get((int)indicePel-1).setValoracion(tempv);
                         
                        
                         //System.out.println("usuario" + tempv.iduser+"|"+usuarios.get(indiceusu-1).id);
@@ -154,47 +155,54 @@ public class Cargadatos implements Serializable{
     }
        
     
-    /*
-    public static void calcularMedias(ArrayList<Usuario> usuarios, ArrayList<Pelicula> peliculas) {
+    public void calcularMedias(ArrayList<Usuario> usuarios, ArrayList<Pelicula> peliculas) {
+        
         // 1. Calculo de la media de valoraciones para cada usuario
         double numerador;
         Iterator<Usuario> it1 = usuarios.iterator();
-        
         Usuario u;
-        long i;
-        while(it1.hasNext()){
-            numerador = 0;
-            u = it1.next();
-            for(Map.Entry<Long,Valoracion> v : u.getValoraciones().entrySet()){
-                numerador += v.getValue().getValor();
+        try{
+            gestor.getEntityManager().getTransaction().begin();
+
+            while(it1.hasNext()){
+                numerador = 0;
+                u = it1.next();
+                for(Map.Entry<Long,Valoracion> v : u.getValoraciones().entrySet()){
+                    numerador += v.getValue().getNota();
+                }
+                u.setMedia(numerador/u.getValoraciones().size());
             }
-            u.setMedia(numerador/u.getValoraciones().size());
-            
-        }
-        
-        
-        // 2. Calculo de la media de valoraciones para cada pelicula
-        Iterator<Pelicula> it2 = peliculas.iterator();
-        Pelicula p;
-        while(it2.hasNext()){
-            numerador = 0;
-            i = 0;
-            p = it2.next();
+
+            // 2. Calculo de la media de valoraciones para cada pelicula
+            Iterator<Pelicula> it2 = peliculas.iterator();
+            Pelicula p;
+            while(it2.hasNext()){
+                numerador = 0;
+                p = it2.next();
+                
                 for(Map.Entry<Long,Valoracion> v : p.getValoraciones().entrySet()){
-                    numerador += v.getValue().getValor();
-                    //System.out.println(v.getValue().getValor());
+                    numerador += v.getValue().getNota();
                 }
-                if(p.getValoraciones().size() == 0){
-                    p.setMedia(0);
+                if(p.getValoraciones().size() != 0){
+                    p.setMedia(numerador/p.getValoraciones().size());
                 }else{
-                    p.setMedia(numerador/p.getValoraciones().size());      
+                    p.setMedia(-1);
                 }
-           
-        }
+            }
+            gestor.getEntityManager().getTransaction().commit();
+        }catch(NumberFormatException e) {
+            System.out.println("la cagaste");
+            e.printStackTrace();
+	} finally {
+            
+                if(gestor.getEntityManager().getTransaction().isActive())
+                    gestor.getEntityManager().getTransaction().rollback();
+		
+	}
     }
     
+      
     
-    */
     
     /*
     public static HashMap<Long, Double> cargarPelisHashMap(ArrayList<Pelicula> pelis){

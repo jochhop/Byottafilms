@@ -8,6 +8,7 @@ package Modelo.Usuarios;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -18,7 +19,7 @@ public class ConjuntoUsuarios {
     ArrayList<Usuario> listUsuarios;
 
     public ConjuntoUsuarios(){
-        
+        this.listUsuarios = new ArrayList();
     }
     
     public ConjuntoUsuarios(ArrayList<Usuario> listUsuarios) {
@@ -28,14 +29,26 @@ public class ConjuntoUsuarios {
     public ArrayList<Usuario> getListUsuarios() {
         return listUsuarios;
     }
+    public Usuario getUsuarioById(long idUsuario) {
+        
+        for(Usuario aux: listUsuarios){
+            if(aux.getId() == idUsuario){
+                return aux;
+            }
+        }
+        return null;
+    }
     
-    public Usuario getUsuario(int idUsuario){
-        return listUsuarios.get(idUsuario);
+    public Usuario getUsuario(int posicion){
+        return listUsuarios.get(posicion);
     }
     
     public void newUsuario(String nombre, String apellidos, String email, int rol, String password, String nick, String avatar){
         Usuario newUsuario = new Usuario(nombre, apellidos, email, rol, password, nick, avatar);
         listUsuarios.add(newUsuario);
+    }
+    public void newUsuario(Usuario u){
+        listUsuarios.add(u);
     }
     
     public boolean openSesion(String nick, String password){

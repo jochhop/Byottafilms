@@ -43,10 +43,11 @@ public class Pelicula implements Serializable {
         this.valoraciones = valoraciones;
     }
 
-    public Pelicula(long ID, String titulo, int anio) {
+    public Pelicula(long ID, int anio, String titulo) {
         this.ID = ID;
         this.titulo = titulo;
         this.anio = anio;
+        this.valoraciones = new HashMap<Long, Valoracion>();
     }
         
     public Pelicula(long id, int anio, String titulo, String descripcion, String portada, String trailer) {        
@@ -62,9 +63,12 @@ public class Pelicula implements Serializable {
     public Pelicula(Pelicula p){
         this.ID = p.getID();
         this.anio = p.getAnio();
+        this.titulo = p.getTitulo();
         this.descripcion = p.getDescripcion();
         this.portada = p.getPortada();
         this.trailer = p.getTrailer();
+        this.media = p.getMedia();
+        this.valoraciones = p.getValoraciones();
     }
 
     public long getID() {
@@ -104,6 +108,10 @@ public class Pelicula implements Serializable {
 
     public double getMedia() {
         return media;
+    }
+
+    public void setMedia(double media) {
+        this.media = media;
     }
     
     

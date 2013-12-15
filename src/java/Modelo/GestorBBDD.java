@@ -39,7 +39,7 @@ public class GestorBBDD {
     
     //GESTIÓN DE PELÍCULAS
     public ConjuntoPeliculas selectPeliculas(GestorPersistencia gp){
-        Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Pelicula");
+        Query consulta = gp.getEntityManager().createQuery("SELECT p FROM Peliculas p");
         ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
         return peliculas;
     }

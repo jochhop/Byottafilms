@@ -43,11 +43,11 @@ public class Algoritmos {
         tiempoTraining = System.currentTimeMillis() - tiempoTraining;
         
         
-        
+        mostrarModeloSimilitud(modeloSimilitud);
         // SERIALIZAR DESERIALIZAR UN MODELO SIMILIUTD
         String url = k+"-Coseno";
         SerializarModeloSimilitud selializar = new SerializarModeloSimilitud(modeloSimilitud);
-        selializar.serializar("modelosSimilitud/"+url+".bin");
+        selializar.serializar("C:\\Users\\Marci\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\"+url);
 
     }
     
@@ -98,7 +98,6 @@ public class Algoritmos {
                 
             }
         }
-        
         if (norma1 != 0 && norma2 !=0){
             double sim = numerador / (Math.sqrt(norma1) * Math.sqrt(norma2));
             // Aplicamos la MEJORA del Factor de relevancia.
@@ -115,7 +114,7 @@ public class Algoritmos {
         
     }
     
-    public HashMap<Long, TreeSet<ItemSim>> getModeloSimilitud_byCoseno(int k, ArrayList<Pelicula> peliculas) {
+    public HashMap<Long, TreeSet<ItemSim>> getModeloSimilitud_byCoseno(int k, ArrayList<Pelicula> pelisCompletas) {
         // Estructura que representa el modelo de similitud (clave: id de pelicula; valor: lista de idPelicula-Similitud).
         HashMap<Long, TreeSet<ItemSim>> modelo_similitud = new HashMap<>();
         // Variables auxiliares:
@@ -124,9 +123,16 @@ public class Algoritmos {
         long id1;
         long id2;
         double similitud;
-        long numPeliculas = peliculas.size();
+        ArrayList<Pelicula> peliculas = new ArrayList();
+
         //List<Pelicula> peliculas = getPeliculasBD(instancia);
-        
+        for (int i=0; i<pelisCompletas.size(); ++i){
+            if(pelisCompletas.get(i).getMedia() != -1){
+                peliculas.add(new Pelicula(pelisCompletas.get(i)));
+            }
+        }
+        long numPeliculas = peliculas.size();
+
         for (long i=0; i<numPeliculas; ++i){
             //System.out.println(" pelicula "+i+" de "+numPeliculas);
             //###// 1.1: Sacar la película numero i. Nota: estudiar si se pueden sacar todas de golpe.
@@ -185,19 +191,20 @@ public class Algoritmos {
         return modelo_similitud;
     }
          
-   public List<Recomendacion> getRecomendaciones( Usuario u, HashMap<Long, TreeSet<ItemSim>> modeloSimilitud, GestorPersistencia instancia){
-        List<Recomendacion> recom_list = new ArrayList();
+   public ArrayList<Recomendacion> getRecomendaciones( Usuario u, HashMap<Long, TreeSet<ItemSim>> modeloSimilitud, GestorPersistencia instancia){
+        ArrayList<Recomendacion> recom_list = new ArrayList();
         GestorBBDD gestor = new GestorBBDD();
         
         // Nota: cargamos todas las medias de las peliculas a memoria para acelerar la ejecución
         ArrayList<Pelicula> peliculas = gestor.selectPeliculas(instancia).getPeliculas();
-        Iterator it = peliculas.iterator();
         // 2. Hallamos las películas que aún no están valoradas.
         ArrayList<Long> peliculasAPredecir = new ArrayList();
-        
-        while(it.hasNext()) {
-            if(!peliculasAPredecir.contains(((Pelicula)it.next()).getID()) && !u.getValoraciones().containsKey(((Pelicula)it.next()).getID())){
-                peliculasAPredecir.add(((Pelicula)it.next()).getID());
+        System.out.println(peliculas.size());
+        for(Pelicula i : peliculas) {
+            if(!peliculasAPredecir.contains(i.getID()) && !u.buscarIdP(i.getID())){
+                if(i.getMedia() != -1){
+                    peliculasAPredecir.add(i.getID());
+                }
             }
         }
         
@@ -207,6 +214,7 @@ public class Algoritmos {
         for(Long p : peliculasAPredecir){
             
             v = calcularPrediccionWA( u,modeloSimilitud.get(p),peliculas);
+            System.out.println("prediccion: "+v);
             if (v != -1){
                 valores.add(new ItemSim(p,v));
             }
@@ -216,9 +224,12 @@ public class Algoritmos {
         // NOTA: se puede devolver la valoracion esperada junto con la pelicula (o un porcentaje: valoracion/5 * 100)
         Pelicula p;
         if(valores.isEmpty()){
+                        System.out.println("soy null puta");
+
            return null;
         }else{
-            double mayor = valores.first().getSim();
+            double mayor = valores.last().getSim();
+            System.out.println(valores.first().getSim()+" "+ valores.last().getSim());
             for(ItemSim i : valores){
                 p = getPeliculaById(peliculas,i.getId());
                 recom_list.add(new Recomendacion(p,(i.getSim()/mayor)*5.0));
@@ -235,7 +246,7 @@ public class Algoritmos {
         //mostrarVecinos(vecinos);
         for(ItemSim i : vecinos){
             // 1.2. Se comprueba si el usuario a valorado a dicho vecino
-            if (u.getValoraciones().containsKey(i.getId())){
+            if ((u.buscarIdP(i.getId()))){
                 // 1.3. Si es así se almacena en la estructura valoracionesCercanas.
                 valoracionesCercanas.add(u.getValoraciones().get(i.getId()));
             }
@@ -265,7 +276,7 @@ public class Algoritmos {
 
                 numerador = numerador + itemSim.getSim()*(v.getNota()-mediaK) ;
                 denominador = denominador + itemSim.getSim();
-
+                System.out.println("Numerador: "+numerador+" Denominador: "+denominador);
             }
 
             if (denominador != 0){
@@ -285,7 +296,7 @@ public class Algoritmos {
         while (it.hasNext()){
             i = it.next();
             
-            if (i.getId() == idP){
+            if (i.getId()== idP){
                 return i;
             }
         }
@@ -306,5 +317,21 @@ public class Algoritmos {
         }
         return aux;
     }
-    
+    public void mostrarModeloSimilitud(HashMap<Long, TreeSet<ItemSim>> modeloSimilitud) {
+        System.out.println("ESTADO: Modelo de similitud creado.");
+        System.out.println("  Modelo de similitud:");
+        long centinela = 0;
+        for(Entry<Long, TreeSet<ItemSim>> e : modeloSimilitud.entrySet()){
+//            if (e.getValue() == null){
+//                System.out.println(" Existe una fila del modelo de similitud vacia - idP="+e.getKey());
+//                centinela = e.getKey();
+//            }
+            System.out.println("    Pelicula("+e.getKey()+"):");
+            for(ItemSim i : e.getValue()){
+                System.out.println("      ("+i.getId()+"-"+i.getSim()+")");
+            }
+            System.out.println();
+        }
+//        System.out.println(" No existe una fila del modelo de similitud vacia - Centinela="+centinela);
+    }
 }

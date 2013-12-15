@@ -9,6 +9,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="Styles/mystyle.css" type="text/css" />
         <script src="http://code.jquery.com/jquery.js"></script>
         <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -47,4 +48,4 @@
     </form>
   </div><!-- /.navbar-collapse -->
 </nav>
-    </body>
+    <div class="container">
