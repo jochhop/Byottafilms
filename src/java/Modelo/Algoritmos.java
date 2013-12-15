@@ -228,7 +228,7 @@ public class Algoritmos {
 
            return null;
         }else{
-            double mayor = valores.last().getSim();
+            double mayor = valores.first().getSim();
             System.out.println(valores.first().getSim()+" "+ valores.last().getSim());
             for(ItemSim i : valores){
                 p = getPeliculaById(peliculas,i.getId());
