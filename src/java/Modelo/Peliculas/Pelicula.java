@@ -101,8 +101,7 @@ public class Pelicula implements Serializable {
 
     public void setValoracion(Valoracion val){
         
-        valoraciones.put(ID, val);        
-        //valoraciones.put(val.getUsuario(), val);
+        valoraciones.put(val.getUsuario(), val);
         
     }
 

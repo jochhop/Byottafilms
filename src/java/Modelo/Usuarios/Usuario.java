@@ -100,7 +100,7 @@ public class Usuario implements Serializable {
     }
 
     public void setValoracion(Valoracion val){        
-        valoraciones.put(ID, val);        
+        valoraciones.put(val.getPelicula(), val);        
     }
     
     public Map<Long,Valoracion> getValoraciones(){
