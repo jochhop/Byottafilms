@@ -6,21 +6,19 @@
 
 package Controlador;
 
-import Modelo.GestorBBDD;
-import Modelo.Peliculas.Pelicula;
-import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Query;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class Index extends HttpServlet {
+/**
+ *
+ * @author jose
+ */
+public class logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,43 +33,10 @@ public class Index extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        //GestorBBDD gbb = new GestorBBDD();                     
-
-        /*ArrayList<Pelicula> ap = new ArrayList<Pelicula>();
-        ArrayList<Usuario> au = new ArrayList<Usuario>();
-        Cargadatos cd = new Cargadatos(GestorPersistencia.instancia());        
-         //cd.cargarPeliculas("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/peliculas2.csv", ap);
-         //cd.cargarValoraciones("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/ratings7.csv", ap, au);
-        //request.getSession().setAttribute("gbb", gbb);
-        */
-
-   
-       GestorPersistencia.newConexion();
-       try {
-            int min, max;
-            if(request.getParameterNames().hasMoreElements()){
-                min=Integer.parseInt(request.getParameter("min"));
-                max=Integer.parseInt(request.getParameter("max"));           
-            }else{
-                min=0;
-                max=10;
-            }
-            
-            List<Pelicula> pelis=new ArrayList<Pelicula>();
-            int numPelis;
-            pelis=GestorBBDD.getPeliculasIntervalo(GestorPersistencia.instancia(), min, max);
-            Query consulta2=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p");
-
-            numPelis=consulta2.getResultList().size();
-            RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
-            dispatcher.include(request, response);
-            request.setAttribute("pelis",pelis);
-            request.setAttribute("numPelis",numPelis);
-            dispatcher = request.getRequestDispatcher("index.jsp");
-            dispatcher.include(request, response);
-            dispatcher = request.getRequestDispatcher("footer.jsp");
-            dispatcher.include(request, response);
+        try {
+            HttpSession sesion_actual = request.getSession(false);
+            sesion_actual.invalidate();
+            response.sendRedirect("/Byottafilms/");
         } finally {
             out.close();
         }

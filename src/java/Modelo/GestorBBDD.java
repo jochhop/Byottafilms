@@ -80,10 +80,13 @@ public class GestorBBDD {
         return usuarios;
     }
     
-    public static Usuario selecUsuarioByNick(GestorPersistencia gp, String nickuser){
+    public static Usuario selectUsuarioByNick(GestorPersistencia gp, String nickuser){
         Query consulta = gp.getEntityManager().createQuery("SELECT u FROM Usuarios u WHERE u.nick = :nickuser").setParameter("nickuser", nickuser);
-        Usuario usuario;
-        usuario=(Usuario)consulta.getSingleResult();
+        Usuario usuario =  new Usuario(-1);
+        
+        if(!consulta.getResultList().isEmpty()){
+            usuario=(Usuario)consulta.getSingleResult();
+        }
         
         return usuario;
     }
