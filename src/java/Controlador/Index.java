@@ -51,9 +51,11 @@ public class Index extends HttpServlet {
         */
         try {
 
-            int min=Integer.parseInt(request.getParameter("min"));
-            int max=Integer.parseInt(request.getParameter("max"));
-            if(min==0 && max==0){
+            int min,max;
+            if(request.getParameterNames().hasMoreElements()){
+                min=Integer.parseInt(request.getParameter("min"));
+                max=Integer.parseInt(request.getParameter("max"));
+            }else{
                 min=0;
                 max=10;
             }
