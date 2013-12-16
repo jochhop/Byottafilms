@@ -52,7 +52,7 @@ public class GestorBBDD {
     }
    
     
-    public static Pelicula selectPeliculaById(GestorPersistencia gp, String idPelicula){
+    public static Pelicula selectPeliculaById(GestorPersistencia gp, long idPelicula){
         Pelicula peli;
         Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE p.ID="+idPelicula);
         peli=(Pelicula) consulta.getSingleResult();
@@ -105,6 +105,13 @@ public class GestorBBDD {
         }catch(Exception e){
             System.out.println("ERROR: al devolver las valoraciones de la película. "+e.getMessage());
         }
+        return valoraciones;
+    }
+    
+    public static ArrayList<Valoracion>selectValoracionesByUsuario(GestorPersistencia gp, long idUsuario){
+        ArrayList<Valoracion> valoraciones;
+        Query consulta=gp.getEntityManager().createQuery("SELECT v FROM Valoraciones v WHERE v.idUsuario = :idUsuario").setParameter("idUsuario", idUsuario);
+        valoraciones=(ArrayList<Valoracion>)consulta.getResultList();
         return valoraciones;
     }
     

@@ -31,7 +31,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#">ByottaFilms</a>
+    <a class="navbar-brand" href="/Byottafilms">ByottaFilms</a>
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
@@ -58,8 +58,8 @@
             <li class="dropdown" style="color:#ffffff">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=user.getNombre()+" "+user.getApellidos()%><b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Mi perfil</a></li>
-                    <li><a href="#">Salir</a></li>
+                    <li><a href=<%="/Byottafilms/profile"%>>Mi perfil</a></li>
+                    <li><a href="/Byottafilms/logout">Salir</a></li>
                  </ul>
             </li>
         </ul>

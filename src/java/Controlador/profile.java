@@ -6,25 +6,21 @@
 
 package Controlador;
 
-import Modelo.GestorBBDD;
-import Modelo.Peliculas.Pelicula;
-import Persistencia.GestorPersistencia;
+import Modelo.Usuarios.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author jose
  */
-public class pelicula extends HttpServlet {
+public class profile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,17 +36,13 @@ public class pelicula extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            Pelicula peli;
-            peli=GestorBBDD.selectPeliculaById(GestorPersistencia.instancia(), Long.parseLong(request.getParameter("id")));
-            getInfoPeli info = new getInfoPeli(peli.getTitulo());
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
-            request.setAttribute("peli",peli);
-            request.setAttribute("info",info);
-            dispatcher = request.getRequestDispatcher("pelicula.jsp");
+            dispatcher = request.getRequestDispatcher("profile.jsp");
             dispatcher.include(request, response);
             dispatcher = request.getRequestDispatcher("footer.jsp");
             dispatcher.include(request, response);
+            
         } finally {
             out.close();
         }
