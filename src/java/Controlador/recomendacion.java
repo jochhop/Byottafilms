@@ -9,6 +9,8 @@ package Controlador;
 import Modelo.GestorBBDD;
 
 import Modelo.Peliculas.Pelicula;
+import Modelo.Recomendacion;
+import Modelo.Usuarios.Usuario;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,7 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class Recomendaciones extends HttpServlet {
+public class recomendacion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,20 +50,22 @@ public class Recomendaciones extends HttpServlet {
                 min=0;
                 max=10;
             }
-            
+                       
             List<Pelicula> pelis= new ArrayList<Pelicula>();
             int numPelis;
+            Usuario usu = new Usuario();
+            long id = 437;
+            int i = 0;
+            usu = GestorBBDD.selectUsuarioById(GestorPersistencia.instancia(), id);
             
-            pelis=GestorBBDD.getPeliculasIntervalo(GestorPersistencia.instancia(), min, max);
-            
-            Query consulta2 = GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p");
+            pelis = GestorBBDD.getRecomendaciones(usu,GestorPersistencia.instancia());            
 
-            numPelis=consulta2.getResultList().size();
+            numPelis=pelis.size();
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
             request.setAttribute("pelis",pelis);
             request.setAttribute("numPelis",numPelis);
-            dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher = request.getRequestDispatcher("recomendacion.jsp");
             dispatcher.include(request, response);
             dispatcher = request.getRequestDispatcher("footer.jsp");
             dispatcher.include(request, response);

@@ -27,19 +27,19 @@ public class SerializarModeloSimilitud implements Serializable{
     }
 
     public SerializarModeloSimilitud() {
+        this.modeloSimilitud = new HashMap<Long, TreeSet<ItemSim>>();
     }
     
-
     public void serializar (String archivo) throws IOException {
         ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(archivo));
         salida.writeObject(this);
     }
-    
+   /* 
     public SerializarModeloSimilitud deserializar (String archivo) throws IOException, ClassNotFoundException {        
         ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(archivo));
         return (SerializarModeloSimilitud) entrada.readObject();
     }
-    
+    */
     public HashMap<Long, TreeSet<ItemSim>> getModeloSimilitud() {
         return modeloSimilitud;
     }
