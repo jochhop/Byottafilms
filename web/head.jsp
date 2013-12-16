@@ -58,7 +58,7 @@
             <li class="dropdown" style="color:#ffffff">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=user.getNombre()+" "+user.getApellidos()%><b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href=<%="/byottafilms/profile"%>>Mi perfil</a></li>
+                    <li><a href=<%="/Byottafilms/profile"%>>Mi perfil</a></li>
                     <li><a href="/Byottafilms/logout">Salir</a></li>
                  </ul>
             </li>

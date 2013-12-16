@@ -20,6 +20,10 @@
         <servlet-name>profile</servlet-name>
         <servlet-class>Controlador.profile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>misvaloraciones</servlet-name>
+        <servlet-class>Controlador.misvaloraciones</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Index</servlet-name>
         <url-pattern>/</url-pattern>
@@ -40,10 +44,12 @@
         <servlet-name>profile</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>misvaloraciones</servlet-name>
+        <url-pattern>/misvaloraciones</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>index</welcome-file>

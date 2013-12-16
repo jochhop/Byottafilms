@@ -39,8 +39,8 @@ public class GestorBBDD {
     }
     
     //GESTIÓN DE PELÍCULAS
-    public ConjuntoPeliculas selectPeliculas(GestorPersistencia gp){
-        Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Pelicula");
+    public static ConjuntoPeliculas selectPeliculas(GestorPersistencia gp){
+        Query consulta = gp.getEntityManager().createQuery("SELECT p FROM Peliculas p");
         ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
         return peliculas;
     }
@@ -50,8 +50,9 @@ public class GestorBBDD {
         ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
         return peliculas;
     }
+   
     
-    public static Pelicula selectPeliculaById(GestorPersistencia gp, String idPelicula){
+    public static Pelicula selectPeliculaById(GestorPersistencia gp, long idPelicula){
         Pelicula peli;
         Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE p.ID="+idPelicula);
         peli=(Pelicula) consulta.getSingleResult();
@@ -70,8 +71,10 @@ public class GestorBBDD {
         return pelis;
     }
      //GESTIÓN DE USUARIOS
-    public Usuario selectUsuarioById(GestorPersistencia gp, Usuario idUsuario){
-        return gp.getEntityManager().find(Usuario.class, idUsuario);
+    public static Usuario selectUsuarioById(GestorPersistencia gp, Long idUsuario){
+         Query consulta =gp.getEntityManager().createQuery("SELECT u FROM Usuarios u WHERE u.ID = "+idUsuario);
+         Usuario u = (Usuario)consulta.getSingleResult();
+         return u;
     }
     
     public ConjuntoUsuarios selectUsuarios(GestorPersistencia gp){
@@ -104,6 +107,13 @@ public class GestorBBDD {
         }catch(Exception e){
             System.out.println("ERROR: al devolver las valoraciones de la película. "+e.getMessage());
         }
+        return valoraciones;
+    }
+    
+    public static ArrayList<Valoracion>selectValoracionesByUsuario(GestorPersistencia gp, long idUsuario){
+        ArrayList<Valoracion> valoraciones;
+        Query consulta=gp.getEntityManager().createQuery("SELECT v FROM Valoraciones v WHERE v.idUsuario = :idUsuario").setParameter("idUsuario", idUsuario);
+        valoraciones=(ArrayList<Valoracion>)consulta.getResultList();
         return valoraciones;
     }
     

@@ -29,6 +29,7 @@ public class Usuario implements Serializable {
     private String avatar;
     @OneToMany(cascade=CascadeType.ALL)
     private Map<Long,Valoracion> valoraciones;
+    private double media;
 
     public Usuario(){}
 
@@ -99,10 +100,25 @@ public class Usuario implements Serializable {
     }
 
     public void setValoracion(Valoracion val){        
-        valoraciones.put(ID, val);        
+        valoraciones.put(val.getPelicula(), val);        
     }
     
     public Map<Long,Valoracion> getValoraciones(){
         return valoraciones;
+    }
+
+    public double getMedia() {
+        return media;
+    }
+    public void setMedia(double media){this.media=media;}
+
+    public boolean buscarIdP(Long idP){
+        for(Map.Entry<Long,Valoracion> val : valoraciones.entrySet()){
+            if(val.getValue().getPelicula() == idP){
+                return true;
+            }
+            
+        }
+        return false;
     }
 }

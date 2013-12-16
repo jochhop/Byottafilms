@@ -28,6 +28,7 @@ public class Pelicula implements Serializable {
     private String trailer;
     @OneToMany(cascade=CascadeType.ALL)
     private Map<Long,Valoracion> valoraciones;
+    private double media;
     
     public Pelicula(){
     }
@@ -62,9 +63,12 @@ public class Pelicula implements Serializable {
     public Pelicula(Pelicula p){
         this.ID = p.getID();
         this.anio = p.getAnio();
+        this.titulo = p.getTitulo();
         this.descripcion = p.getDescripcion();
         this.portada = p.getPortada();
         this.trailer = p.getTrailer();
+        this.media = p.getMedia();
+        this.valoraciones = p.getValoraciones();
     }
 
     public long getID() {
@@ -97,9 +101,16 @@ public class Pelicula implements Serializable {
 
     public void setValoracion(Valoracion val){
         
-        valoraciones.put(ID, val);        
-        //valoraciones.put(val.getUsuario(), val);
+        valoraciones.put(val.getUsuario(), val);
         
+    }
+
+    public double getMedia() {
+        return media;
+    }
+
+    public void setMedia(double media) {
+        this.media = media;
     }
     
     

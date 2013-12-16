@@ -8,23 +8,24 @@ package Controlador;
 
 import Modelo.GestorBBDD;
 import Modelo.Peliculas.Pelicula;
+import Modelo.Usuarios.Usuario;
+import Modelo.Valoraciones.Valoracion;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author jose
  */
-public class pelicula extends HttpServlet {
+public class misvaloraciones extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,17 +41,35 @@ public class pelicula extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            Pelicula peli;
-            peli=GestorBBDD.selectPeliculaById(GestorPersistencia.instancia(), Long.parseLong(request.getParameter("id")));
-            getInfoPeli info = new getInfoPeli(peli.getTitulo());
+            HttpSession sesion_actual = request.getSession(true);
+            Usuario user=(Usuario)sesion_actual.getAttribute("user");
+            ArrayList<Valoracion> valoraciones;
+            ArrayList<Pelicula> pelis = null;
+            if(user!=null){
+                valoraciones=GestorBBDD.selectValoracionesByUsuario(GestorPersistencia.instancia(), user.getId());
+            }else{
+                valoraciones=null;
+            }
+            if(valoraciones!=null){
+                Pelicula peli;
+                for(int i=0;i<valoraciones.size();i++){
+                    peli=(Pelicula)GestorBBDD.selectPeliculaById(GestorPersistencia.instancia(), valoraciones.get(i).getPelicula());
+                    if(peli!=null){
+                        //pelis.add(peli);
+                    }
+                }
+            }else{
+                pelis=null;
+            }
+            
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
-            request.setAttribute("peli",peli);
-            request.setAttribute("info",info);
-            dispatcher = request.getRequestDispatcher("pelicula.jsp");
+            request.setAttribute("pelis",pelis);
+            dispatcher = request.getRequestDispatcher("misvaloraciones.jsp");
             dispatcher.include(request, response);
             dispatcher = request.getRequestDispatcher("footer.jsp");
             dispatcher.include(request, response);
+            
         } finally {
             out.close();
         }
