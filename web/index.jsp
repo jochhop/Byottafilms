@@ -9,21 +9,20 @@
 <table class="table table-striped">
     <thead>
         <tr>
-        <th>ID</th>
+        <th>#</th>
         <th>Año</th>
         <th>Título</th>
         <th>Opciones</th>
         </tr>
     </thead>
     <tbody>
-        <% ArrayList<Pelicula> pelis=((ArrayList<Pelicula>)request.getAttribute("pelis"));
-        %>
+        <% ArrayList<Pelicula> pelis=((ArrayList<Pelicula>)request.getAttribute("pelis"));%>
         <% for(int i=0;i<pelis.size();i++){ %>
         <tr>
             <td><%= pelis.get(i).getID() %></td>
             <td><%= pelis.get(i).getAnio() %></td>
             <td><%= pelis.get(i).getTitulo() %></td>
-            <td><a href=<%="/Byottafilms/pelicula/?id="+pelis.get(i).getID()%>><span class="glyphicon glyphicon-eye-open"></span></td>
+            <td><a title="Ver detalles" href=<%="/Byottafilms/pelicula?id="+pelis.get(i).getID()%>><span class="glyphicon glyphicon-eye-open"></span></td>
         </tr>
         <% } %>
       </tbody>
