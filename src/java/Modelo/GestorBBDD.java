@@ -14,6 +14,7 @@ import Modelo.Valoraciones.ConjuntoValoraciones;
 import Modelo.Valoraciones.Valoracion;
 import Persistencia.GestorPersistencia;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Query;
 
 /**
@@ -38,7 +39,7 @@ public class GestorBBDD {
     }
     
     //GESTIÓN DE PELÍCULAS
-    public ConjuntoPeliculas selectPeliculas(GestorPersistencia gp){
+    public static ConjuntoPeliculas selectPeliculas(GestorPersistencia gp){
         Query consulta = gp.getEntityManager().createQuery("SELECT p FROM Peliculas p");
         ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
         return peliculas;
@@ -49,19 +50,13 @@ public class GestorBBDD {
         ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
         return peliculas;
     }
+   
     
-    public Pelicula selectPeliculaById(GestorPersistencia gp, int idPelicula){
+    public static Pelicula selectPeliculaById(GestorPersistencia gp, String idPelicula){
         Pelicula peli;
-        try{
-            Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Pelicula WHERE ID "+idPelicula);
-            peli = (Pelicula)consulta.getSingleResult();
-            System.out.println("Entra aqui!!!");
-            return peli;
-        }catch(Exception e){
-            System.out.println("ERROR: al obtener la película. "+e.getMessage());
-        }
-        System.out.println("Entra aqui!!!");
-        return null;
+        Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE p.ID="+idPelicula);
+        peli=(Pelicula) consulta.getSingleResult();
+        return peli;
     }
     
     public int getNumeroPeliculas(GestorPersistencia gp){
@@ -69,15 +64,31 @@ public class GestorBBDD {
         return (Integer) consulta.getSingleResult();
     }
     
+    public static ArrayList<Pelicula> getPeliculasIntervalo(GestorPersistencia gp, int min, int max){
+        ArrayList<Pelicula> pelis;
+        Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE (p.ID>"+min+" AND p.ID<="+max+")");
+        pelis=(ArrayList<Pelicula>)consulta.getResultList();
+        return pelis;
+    }
      //GESTIÓN DE USUARIOS
-    public Usuario selectUsuarioById(GestorPersistencia gp, Usuario idUsuario){
-        return gp.getEntityManager().find(Usuario.class, idUsuario);
+    public static Usuario selectUsuarioById(GestorPersistencia gp, Long idUsuario){
+         Query consulta =gp.getEntityManager().createQuery("SELECT u FROM Usuarios u WHERE u.ID = "+idUsuario);
+         Usuario u = (Usuario)consulta.getSingleResult();
+         return u;
     }
     
     public ConjuntoUsuarios selectUsuarios(GestorPersistencia gp){
         Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Usuario");
         ConjuntoUsuarios usuarios = new ConjuntoUsuarios((ArrayList)consulta.getResultList());
         return usuarios;
+    }
+    
+    public static Usuario selecUsuarioByNick(GestorPersistencia gp, String nickuser){
+        Query consulta = gp.getEntityManager().createQuery("SELECT u FROM Usuarios u WHERE u.nick = :nickuser").setParameter("nickuser", nickuser);
+        Usuario usuario;
+        usuario=(Usuario)consulta.getSingleResult();
+        
+        return usuario;
     }
  
     //GESTIÓN DE VALORACIONES

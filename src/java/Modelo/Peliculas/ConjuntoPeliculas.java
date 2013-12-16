@@ -13,6 +13,7 @@ public class ConjuntoPeliculas {
     ArrayList<Pelicula> listPeliculas;
 
     public ConjuntoPeliculas() {
+        listPeliculas = new ArrayList();
     }  
     
     public ConjuntoPeliculas(ArrayList<Pelicula> listPeliculas) {

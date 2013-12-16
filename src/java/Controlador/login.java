@@ -6,33 +6,24 @@
 
 package Controlador;
 
-import Modelo.Algoritmos;
-import Modelo.Cargadatos;
 import Modelo.GestorBBDD;
-import Modelo.ItemSim;
-import Modelo.Peliculas.ConjuntoPeliculas;
 import Modelo.Peliculas.Pelicula;
-import Modelo.Recomendacion;
-import Modelo.SerializarModeloSimilitud;
-import Modelo.Usuarios.ConjuntoUsuarios;
 import Modelo.Usuarios.Usuario;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.Query;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class Index extends HttpServlet {
+/**
+ *
+ * @author jose
+ */
+public class login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,32 +38,35 @@ public class Index extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-   
-       GestorPersistencia.newConexion();
-       try {
-            int min, max;
-            if(request.getParameterNames().hasMoreElements()){
-                min=Integer.parseInt(request.getParameter("min"));
-                max=Integer.parseInt(request.getParameter("max"));           
+        try {
+            Usuario user=new Usuario();
+            String message="";
+            String usuario=request.getParameter("usuario");
+            String password=request.getParameter("password");
+            //user=GestorBBDD.selecUsuarioByNick(GestorPersistencia.instancia(), usuario);
+            user=GestorBBDD.selecUsuarioByNick(GestorPersistencia.instancia(), usuario);
+            HttpSession nueva_sesion = request.getSession(true);
+            if(user!=null){
+                if(user.getPassword().contains(password)){
+                    message="<div class=\"alert alert-success fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "Hola <strong>"+user.getNombre()+"</strong>! te has logueado con éxito :D</div>";
+                    
+                }else{
+                    message="<div class=\"alert alert-danger fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "El nick o la contraseña son incorrectos.</div>";
+                }
+                nueva_sesion.setAttribute("user", user);
+                nueva_sesion.setAttribute("message", message);
+                response.sendRedirect("/Byottafilms/");
             }else{
-                min=0;
-                max=10;
+                message="<div class=\"alert alert-danger fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "El nick o la contraseña son incorrectos.</div>";
+                nueva_sesion.setAttribute("message", message);
+                response.sendRedirect("/Byottafilms/");
             }
-            
-            List<Pelicula> pelis=new ArrayList<Pelicula>();
-            int numPelis;
-            pelis=GestorBBDD.getPeliculasIntervalo(GestorPersistencia.instancia(), min, max);
-            
-            Query consulta2=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p");
-            numPelis=consulta2.getResultList().size();
-            RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
-            dispatcher.include(request, response);
-            request.setAttribute("pelis",pelis);
-            request.setAttribute("numPelis",numPelis);
-            dispatcher = request.getRequestDispatcher("index.jsp");
-            dispatcher.include(request, response);
-            dispatcher = request.getRequestDispatcher("footer.jsp");
-            dispatcher.include(request, response);
         } finally {
             out.close();
         }

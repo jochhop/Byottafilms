@@ -214,7 +214,6 @@ public class Algoritmos {
         for(Long p : peliculasAPredecir){
             
             v = calcularPrediccionWA( u,modeloSimilitud.get(p),peliculas);
-            System.out.println("prediccion: "+v);
             if (v != -1){
                 valores.add(new ItemSim(p,v));
             }
@@ -224,12 +223,11 @@ public class Algoritmos {
         // NOTA: se puede devolver la valoracion esperada junto con la pelicula (o un porcentaje: valoracion/5 * 100)
         Pelicula p;
         if(valores.isEmpty()){
-                        System.out.println("soy null puta");
+                        System.out.println("soy null");
 
            return null;
         }else{
             double mayor = valores.first().getSim();
-            System.out.println(valores.first().getSim()+" "+ valores.last().getSim());
             for(ItemSim i : valores){
                 p = getPeliculaById(peliculas,i.getId());
                 recom_list.add(new Recomendacion(p,(i.getSim()/mayor)*5.0));
@@ -276,7 +274,6 @@ public class Algoritmos {
 
                 numerador = numerador + itemSim.getSim()*(v.getNota()-mediaK) ;
                 denominador = denominador + itemSim.getSim();
-                System.out.println("Numerador: "+numerador+" Denominador: "+denominador);
             }
 
             if (denominador != 0){
