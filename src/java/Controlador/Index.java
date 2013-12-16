@@ -6,7 +6,10 @@
 
 package Controlador;
 
+
+
 import Modelo.GestorBBDD;
+
 import Modelo.Peliculas.Pelicula;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
@@ -61,6 +64,7 @@ public class Index extends HttpServlet {
             List<Pelicula> pelis=new ArrayList<Pelicula>();
             int numPelis;
             pelis=GestorBBDD.getPeliculasIntervalo(GestorPersistencia.instancia(), min, max);
+            
             Query consulta2=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p");
 
             numPelis=consulta2.getResultList().size();

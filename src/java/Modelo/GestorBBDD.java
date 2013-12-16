@@ -39,8 +39,8 @@ public class GestorBBDD {
     }
     
     //GESTIÓN DE PELÍCULAS
-    public ConjuntoPeliculas selectPeliculas(GestorPersistencia gp){
-        Query consulta = gp.getEntityManager().createQuery("SELECT * FROM Pelicula");
+    public static ConjuntoPeliculas selectPeliculas(GestorPersistencia gp){
+        Query consulta = gp.getEntityManager().createQuery("SELECT p FROM Peliculas p");
         ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
         return peliculas;
     }
@@ -50,6 +50,7 @@ public class GestorBBDD {
         ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
         return peliculas;
     }
+   
     
     public static Pelicula selectPeliculaById(GestorPersistencia gp, String idPelicula){
         Pelicula peli;
@@ -70,8 +71,10 @@ public class GestorBBDD {
         return pelis;
     }
      //GESTIÓN DE USUARIOS
-    public Usuario selectUsuarioById(GestorPersistencia gp, Usuario idUsuario){
-        return gp.getEntityManager().find(Usuario.class, idUsuario);
+    public static Usuario selectUsuarioById(GestorPersistencia gp, Long idUsuario){
+         Query consulta =gp.getEntityManager().createQuery("SELECT u FROM Usuarios u WHERE u.ID = "+idUsuario);
+         Usuario u = (Usuario)consulta.getSingleResult();
+         return u;
     }
     
     public ConjuntoUsuarios selectUsuarios(GestorPersistencia gp){
@@ -80,13 +83,11 @@ public class GestorBBDD {
         return usuarios;
     }
     
-    public static Usuario selectUsuarioByNick(GestorPersistencia gp, String nickuser){
+
+    public static Usuario selecUsuarioByNick(GestorPersistencia gp, String nickuser){
         Query consulta = gp.getEntityManager().createQuery("SELECT u FROM Usuarios u WHERE u.nick = :nickuser").setParameter("nickuser", nickuser);
-        Usuario usuario =  new Usuario(-1);
-        
-        if(!consulta.getResultList().isEmpty()){
-            usuario=(Usuario)consulta.getSingleResult();
-        }
+        Usuario usuario;
+        usuario=(Usuario)consulta.getSingleResult();
         
         return usuario;
     }

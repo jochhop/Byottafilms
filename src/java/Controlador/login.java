@@ -40,39 +40,31 @@ public class login extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
 
-            Usuario user;
-            String message;
+            Usuario user=new Usuario();
+            String message="";
             String usuario=request.getParameter("usuario");
             String password=request.getParameter("password");
             //user=GestorBBDD.selecUsuarioByNick(GestorPersistencia.instancia(), usuario);
+            user=GestorBBDD.selecUsuarioByNick(GestorPersistencia.instancia(), usuario);
             HttpSession nueva_sesion = request.getSession(true);
-            if(!usuario.isEmpty() && !password.isEmpty()){
-                user=GestorBBDD.selectUsuarioByNick(GestorPersistencia.instancia(), usuario);
-                if(user.getId()!=-1){
-                    if(user.getPassword().compareTo(password)==0){
-                        message="<div class=\"alert alert-success fade in\">"
-                                + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
-                                + "Hola <strong>"+user.getNombre()+"</strong>! te has logueado con éxito :D</div>";
-                        nueva_sesion.setAttribute("user", user);
-                    }else{
-                        message="<div class=\"alert alert-danger fade in\">"
-                                + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
-                                + "El nick o la contraseña son incorrectos.</div>";
-                        //user=null;
-                    }
-                    nueva_sesion.setAttribute("message", message);
-                    response.sendRedirect("/Byottafilms/");
+            if(user!=null){
+                if(user.getPassword().contains(password)){
+                    message="<div class=\"alert alert-success fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "Hola <strong>"+user.getNombre()+"</strong>! te has logueado con éxito :D</div>";
+                    
                 }else{
                     message="<div class=\"alert alert-danger fade in\">"
-                                + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
-                                + "El nick o la contraseña son incorrectos.</div>";
-                    nueva_sesion.setAttribute("message", message);
-                    response.sendRedirect("/Byottafilms/");
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "El nick o la contraseña son incorrectos.</div>";
                 }
+                nueva_sesion.setAttribute("user", user);
+                nueva_sesion.setAttribute("message", message);
+                response.sendRedirect("/Byottafilms/");
             }else{
                 message="<div class=\"alert alert-danger fade in\">"
-                                + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
-                                + "El nick o la contraseña son incorrectos.</div>";
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "El nick o la contraseña son incorrectos.</div>";
 
                 nueva_sesion.setAttribute("message", message);
                 response.sendRedirect("/Byottafilms/");

@@ -7,27 +7,25 @@
 package Modelo;
 
 import Modelo.Peliculas.Pelicula;
-import java.util.ArrayList;
 
 /**
  *
  * @author jose
  */
 public class Recomendacion {
-    
-    ArrayList<Pelicula> recomendacion;
-    
-    Recomendacion(){}
-    
-    public ArrayList<Pelicula> getRecomendacion(){
-        
-        /*La recomendacion se crea a partir de los algoritmos que utilicemos!
-        
-        Nos devolvera una lista de peiculas que luego transformaremos para que nos la muestre en la web.
-        
-        */
-        
-        return recomendacion;
+    private Pelicula pelicula;
+    private double recomendacion;
+
+    public Recomendacion(Pelicula pelicula, double recomendacion) {
+        this.pelicula = new Pelicula(pelicula);
+        this.recomendacion = recomendacion;
     }
-    
+
+    public Pelicula getPelicula() {
+        return pelicula;
+    }
+
+    public double getRecomendacion() {
+        return recomendacion;
+    } 
 }
