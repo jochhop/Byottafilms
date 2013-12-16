@@ -44,7 +44,7 @@ public class misvaloraciones extends HttpServlet {
             HttpSession sesion_actual = request.getSession(true);
             Usuario user=(Usuario)sesion_actual.getAttribute("user");
             ArrayList<Valoracion> valoraciones;
-            ArrayList<Pelicula> pelis = null;
+            ArrayList<Pelicula> pelis = new ArrayList();
             if(user!=null){
                 valoraciones=GestorBBDD.selectValoracionesByUsuario(GestorPersistencia.instancia(), user.getId());
             }else{
@@ -55,13 +55,11 @@ public class misvaloraciones extends HttpServlet {
                 for(int i=0;i<valoraciones.size();i++){
                     peli=(Pelicula)GestorBBDD.selectPeliculaById(GestorPersistencia.instancia(), valoraciones.get(i).getPelicula());
                     if(peli!=null){
-                        //pelis.add(peli);
+                        pelis.add(peli);
                     }
+                    //System.out.println("La peli es: "+peli.getTitulo());
                 }
-            }else{
-                pelis=null;
             }
-            
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
             request.setAttribute("pelis",pelis);

@@ -3,10 +3,13 @@
     Created on : 13-dic-2013, 16:02:17
     Author     : jose
 --%>
+<%@page import="Modelo.Usuarios.Usuario"%>
 <%@page import="Controlador.getInfoPeli"%>
 <%@page import="Modelo.Peliculas.Pelicula"%>
 <%Pelicula peli=(Pelicula)request.getAttribute("peli");
   getInfoPeli info=(getInfoPeli)request.getAttribute("info");
+  HttpSession session_actual=request.getSession(true);
+    Usuario user=(Usuario)session_actual.getAttribute("user");
 %>
 <style type="text/css">
     .star-rating{ list-style:none; margin: 0px; padding:0px; width: 100px; height: 20px; position: relative; background: url(http://www.cssblog.es/ejemplos/star_rating.gif) top left repeat-x; } .star-rating li{ padding:0px; margin:0px; /**/ float: left; /* */ } .star-rating li a{ display:block; width:20px; height: 20px; text-decoration: none; text-indent: -9000px; z-index: 20; position: absolute; padding: 0px; } .star-rating li a:hover{ background: url(http://www.cssblog.es/ejemplos/star_rating.gif) left bottom; z-index: 1; left: 0px; } .star-rating a.one-star{ left: 0px; } .star-rating a.one-star:hover{ width:20px; } .star-rating a.two-stars{ left:20px; } .star-rating a.two-stars:hover{ width: 40px; } .star-rating a.three-stars:hover{ width: 60px; } .star-rating a.three-stars{ left: 40px; } .star-rating a.four-stars{ left: 60px; } .star-rating a.four-stars:hover{ width: 80px; } .star-rating a.five-stars{ left: 80px; } .star-rating a.five-stars:hover{ width: 100px; }
@@ -54,15 +57,19 @@
         </div>
     <div class="col-md-2">
         <div class="byotta" style="width: 200px; height:162px;margin-bottom: 20px;background: url(http://static.freepik.com/foto-gratis/dibujos-animados-de-bellota_17-706205826.jpg);background-size: 200px;background-repeat: no-repeat">
-            <p title="Puntuación media" style="font-size:70pt;font-weight:bold;color:white;padding-top:10px;padding-right:10px;text-align: center;">4.5</p>
+            <% if(peli.getMedia()!=-1){%>
+            <p title="Puntuación media" style="font-size:50pt;font-weight:bold;color:white;padding-top:30px;padding-right:10px;text-align: center;"><%=String.format("%.2f", peli.getMedia())%></p>
+            <%}%>
         </div>
-        <ul class="star-rating">
-            <li><a class="one-star" title="Valora 1 estrella de 5" href="#">1</a></li>
-            <li><a class="two-stars" title="Valora 2 estrellas de 5" href="#">2</a></li>
-            <li><a class="three-stars" title="Valora 3 estrellas de 5" href="#">3</a></li>
-            <li><a class="four-stars" title="Valora 4 estrellas de 5" href="#">4</a></li>
-            <li><a class="five-stars" title="Valora 5 estrellas de 5" href="#">5</a></li>
-        </ul>
+        <%if(user!=null){%>
+            <ul class="star-rating">
+                <li><a class="one-star" title="Valora 1 estrella de 5" href="#">1</a></li>
+                <li><a class="two-stars" title="Valora 2 estrellas de 5" href="#">2</a></li>
+                <li><a class="three-stars" title="Valora 3 estrellas de 5" href="#">3</a></li>
+                <li><a class="four-stars" title="Valora 4 estrellas de 5" href="#">4</a></li>
+                <li><a class="five-stars" title="Valora 5 estrellas de 5" href="#">5</a></li>
+            </ul>
+        <%}%>
     </div>
 </div>
 

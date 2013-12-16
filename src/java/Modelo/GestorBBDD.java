@@ -54,9 +54,18 @@ public class GestorBBDD {
     
     public static Pelicula selectPeliculaById(GestorPersistencia gp, long idPelicula){
         Pelicula peli;
-        Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE p.ID="+idPelicula);
+        Query consulta=gp.getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE p.ID="+idPelicula);
         peli=(Pelicula) consulta.getSingleResult();
         return peli;
+    }
+    
+    public static ArrayList<Pelicula> selectPeliculasByTitulo(GestorPersistencia gp, String titulo){
+        ArrayList<Pelicula> pelis=new ArrayList();
+        Query consulta=gp.getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE p.titulo LIKE '%"+titulo+"%'").setMaxResults(100);
+        if(!consulta.getResultList().isEmpty()){
+            pelis=(ArrayList<Pelicula>)consulta.getResultList();
+        }
+        return pelis;
     }
     
     public int getNumeroPeliculas(GestorPersistencia gp){
@@ -66,7 +75,7 @@ public class GestorBBDD {
     
     public static ArrayList<Pelicula> getPeliculasIntervalo(GestorPersistencia gp, int min, int max){
         ArrayList<Pelicula> pelis;
-        Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE (p.ID>"+min+" AND p.ID<="+max+")");
+        Query consulta=gp.getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE (p.ID>"+min+" AND p.ID<="+max+")");
         pelis=(ArrayList<Pelicula>)consulta.getResultList();
         return pelis;
     }

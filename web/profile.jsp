@@ -32,9 +32,9 @@
                 <tr>
                    <td style="font-weight: bold">Rango</td>
                    <% if(user.getRol()>0){ %>
-                        <td><h3><span class="label label-warning">Administrador</span></h3></td>
+                        <td><h4><span class="label label-warning">Administrador</span></h4></td>
                    <%}else{%>
-                        <td><h3><span class="label label-default">Usuario</span></h3></td>
+                        <td><h4><span class="label label-default">Usuario</span></h4></td>
                    <%}%>
                 </tr>
             </table>

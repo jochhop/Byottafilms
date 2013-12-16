@@ -36,9 +36,9 @@
 
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <form class="navbar-form navbar-left" role="search">
+      <form class="navbar-form navbar-left" role="search" method="POST" action="/Byottafilms/buscarpeli">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Buscar película">
+        <input type="text" class="form-control" placeholder="Buscar película" name="titulo">
       </div>
     </form>
     <% if (user==null){ %>

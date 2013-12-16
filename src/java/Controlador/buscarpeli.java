@@ -6,23 +6,23 @@
 
 package Controlador;
 
-import Modelo.Cargadatos;
 import Modelo.GestorBBDD;
 import Modelo.Peliculas.Pelicula;
-import Modelo.Usuarios.ConjuntoUsuarios;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class Index extends HttpServlet {
+/**
+ *
+ * @author jose
+ */
+public class buscarpeli extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,30 +37,16 @@ public class Index extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-   
-       GestorPersistencia.newConexion();
-       //Cargadatos cd=new Cargadatos(GestorPersistencia.instancia());
-       //ArrayList<Pelicula> pelis2=new ArrayList();
-       //ConjuntoUsuarios usuarios=new ConjuntoUsuarios();
-       //cd.cargarPeliculas("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/peliculas2.csv", pelis2);
-       //cd.cargarValoraciones("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/ratings7.csv", pelis2, usuarios);
-       //cd.calcularMedias(usuarios.getListUsuarios(), pelis2);
-       try {
-            int min, max;
-            if(request.getParameterNames().hasMoreElements()){
-                min=Integer.parseInt(request.getParameter("min"));
-                max=Integer.parseInt(request.getParameter("max"));           
-            }else{
-                min=0;
-                max=10;
+        try {
+            String titulo=request.getParameter("titulo");
+            ArrayList<Pelicula> pelis = new ArrayList();
+            if(!titulo.isEmpty()){
+                pelis=GestorBBDD.selectPeliculasByTitulo(GestorPersistencia.instancia(), titulo);
             }
-            
-            List<Pelicula> pelis;
-            pelis=GestorBBDD.getPeliculasIntervalo(GestorPersistencia.instancia(), min, max);
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
             request.setAttribute("pelis",pelis);
-            dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher = request.getRequestDispatcher("busquedapeliculas.jsp");
             dispatcher.include(request, response);
             dispatcher = request.getRequestDispatcher("footer.jsp");
             dispatcher.include(request, response);
