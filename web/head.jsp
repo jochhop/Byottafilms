@@ -58,11 +58,19 @@
             <li class="dropdown" style="color:#ffffff">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=user.getNombre()+" "+user.getApellidos()%><b class="caret"></b></a>
                 <ul class="dropdown-menu">
+                    <% if(user.getRol()>0){%>
+                        <li>
+                        <a href="/Byottafilms/admin" title="Administración">
+                               Administración
+                        </a>
+                        </li>
+                    <%}%>
                     <li><a href=<%="/Byottafilms/profile"%>>Mi perfil</a></li>
                     <li><a href="/Byottafilms/logout">Salir</a></li>
                  </ul>
             </li>
         </ul>
+        
      <%}%>
   </div><!-- /.navbar-collapse -->
 </nav>

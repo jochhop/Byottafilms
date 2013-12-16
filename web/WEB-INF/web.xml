@@ -28,6 +28,10 @@
         <servlet-name>buscarpeli</servlet-name>
         <servlet-class>Controlador.buscarpeli</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>admin</servlet-name>
+        <servlet-class>Controlador.admin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Index</servlet-name>
         <url-pattern>/</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>buscarpeli</servlet-name>
         <url-pattern>/buscarpeli</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
