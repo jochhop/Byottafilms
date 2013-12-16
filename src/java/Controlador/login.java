@@ -8,23 +8,22 @@ package Controlador;
 
 import Modelo.GestorBBDD;
 import Modelo.Peliculas.Pelicula;
+import Modelo.Usuarios.Usuario;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Query;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author jose
  */
-public class pelicula extends HttpServlet {
+public class login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,17 +39,34 @@ public class pelicula extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            Pelicula peli;
-            peli=GestorBBDD.selectPeliculaById(GestorPersistencia.instancia(), request.getParameter("id").toString());
-            getInfoPeli info = new getInfoPeli(peli.getTitulo());
-            RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
-            dispatcher.include(request, response);
-            request.setAttribute("peli",peli);
-            request.setAttribute("info",info);
-            dispatcher = request.getRequestDispatcher("pelicula.jsp");
-            dispatcher.include(request, response);
-            dispatcher = request.getRequestDispatcher("footer.jsp");
-            dispatcher.include(request, response);
+            Usuario user=new Usuario();
+            String message="";
+            String usuario=request.getParameter("usuario");
+            String password=request.getParameter("password");
+            //user=GestorBBDD.selecUsuarioByNick(GestorPersistencia.instancia(), usuario);
+            user=GestorBBDD.selecUsuarioByNick(GestorPersistencia.instancia(), usuario);
+            HttpSession nueva_sesion = request.getSession(true);
+            if(user!=null){
+                if(user.getPassword().contains(password)){
+                    message="<div class=\"alert alert-success fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "Hola <strong>"+user.getNombre()+"</strong>! te has logueado con éxito :D</div>";
+                    
+                }else{
+                    message="<div class=\"alert alert-danger fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "El nick o la contraseña son incorrectos.</div>";
+                }
+                nueva_sesion.setAttribute("user", user);
+                nueva_sesion.setAttribute("message", message);
+                response.sendRedirect("/Byottafilms/");
+            }else{
+                message="<div class=\"alert alert-danger fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "El nick o la contraseña son incorrectos.</div>";
+                nueva_sesion.setAttribute("message", message);
+                response.sendRedirect("/Byottafilms/");
+            }
         } finally {
             out.close();
         }
