@@ -9,7 +9,7 @@ package Persistencia;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import com.mysql.jdbc.*;
+
 
 /**
  *
