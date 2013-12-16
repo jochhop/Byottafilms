@@ -6,9 +6,8 @@
 
 package Controlador;
 
-import Modelo.Cargadatos;
+import Modelo.GestorBBDD;
 import Modelo.Peliculas.Pelicula;
-import Modelo.Usuarios.Usuario;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,10 +36,7 @@ public class Index extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        //GestorBBDD gbb = new GestorBBDD();
-       
-        
-        GestorPersistencia.newConexion();
+        //GestorBBDD gbb = new GestorBBDD();                     
 
         /*ArrayList<Pelicula> ap = new ArrayList<Pelicula>();
         ArrayList<Usuario> au = new ArrayList<Usuario>();
@@ -49,30 +45,29 @@ public class Index extends HttpServlet {
          //cd.cargarValoraciones("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/ratings7.csv", ap, au);
         //request.getSession().setAttribute("gbb", gbb);
         */
-        try {
-
-            int min,max;
+   
+       GestorPersistencia.newConexion();
+       try {
+            int min, max;
             if(request.getParameterNames().hasMoreElements()){
                 min=Integer.parseInt(request.getParameter("min"));
-                max=Integer.parseInt(request.getParameter("max"));
+                max=Integer.parseInt(request.getParameter("max"));           
             }else{
                 min=0;
                 max=10;
             }
-            System.out.println("esto es min "+min+" esto es max"+max);
+            
             List<Pelicula> pelis=new ArrayList<Pelicula>();
             int numPelis;
-            Query consulta=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p WHERE (p.ID>"+min+" AND p.ID<="+max+")");
-            pelis=consulta.getResultList();
+            pelis=GestorBBDD.getPeliculasIntervalo(GestorPersistencia.instancia(), min, max);
             Query consulta2=GestorPersistencia.instancia().getEntityManager().createQuery("SELECT p FROM Peliculas p");
-            numPelis=consulta2.getResultList().size();           
+
+            numPelis=consulta2.getResultList().size();
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
             request.setAttribute("pelis",pelis);
             request.setAttribute("numPelis",numPelis);
-            System.out.println("numero de pelis" + numPelis);
-            //out.println("<h1>Bienvenidos a ByottaFilms</h1>");
-            //out.println("<p>Pelicula con nombre: "+pelicula.getTitulo()+"</p>");
             dispatcher = request.getRequestDispatcher("index.jsp");
             dispatcher.include(request, response);
             dispatcher = request.getRequestDispatcher("footer.jsp");
