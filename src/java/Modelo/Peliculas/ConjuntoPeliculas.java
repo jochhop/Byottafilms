@@ -28,7 +28,7 @@ public class ConjuntoPeliculas {
         return listPeliculas.get(id);
     }
     public ArrayList<Pelicula> getPeliculas(){
-        ArrayList<Pelicula> pelis = new ArrayList<>();
+        ArrayList<Pelicula> pelis = new ArrayList<Pelicula>();
         pelis = (ArrayList<Pelicula>) listPeliculas.clone();
         return pelis;
     }

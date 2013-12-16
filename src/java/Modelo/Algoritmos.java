@@ -116,7 +116,7 @@ public class Algoritmos {
     
     public HashMap<Long, TreeSet<ItemSim>> getModeloSimilitud_byCoseno(int k, ArrayList<Pelicula> pelisCompletas) {
         // Estructura que representa el modelo de similitud (clave: id de pelicula; valor: lista de idPelicula-Similitud).
-        HashMap<Long, TreeSet<ItemSim>> modelo_similitud = new HashMap<>();
+        HashMap<Long, TreeSet<ItemSim>> modelo_similitud = new HashMap<Long, TreeSet<ItemSim>>();
         // Variables auxiliares:
         TreeSet<ItemSim> fila1;
         TreeSet<ItemSim> fila2;
@@ -237,7 +237,7 @@ public class Algoritmos {
     }
     private double calcularPrediccionWA(Usuario u, TreeSet<ItemSim> vecinos, ArrayList<Pelicula> peliculas) {
         // Estructura con solamente las valoraciones que un usuario ha realizado sobre los k vecinos mas cercanos a idP
-        ArrayList<Valoracion> valoracionesCercanas = new ArrayList<>();
+        ArrayList<Valoracion> valoracionesCercanas = new ArrayList<Valoracion>();
         
         // PASO 1: Quedarnos con las valoraciones a las películas más cercanas.
         // 1.1. Se recorren los vecinos mas cercanos a idP
