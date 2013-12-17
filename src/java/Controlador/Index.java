@@ -8,6 +8,7 @@ package Controlador;
 
 import Modelo.Cargadatos;
 import Modelo.GestorBBDD;
+
 import Modelo.Peliculas.Pelicula;
 import Modelo.Usuarios.ConjuntoUsuarios;
 import Persistencia.GestorPersistencia;
@@ -37,6 +38,17 @@ public class Index extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        //GestorBBDD gbb = new GestorBBDD();                     
+
+        /*ArrayList<Pelicula> ap = new ArrayList<Pelicula>();
+        ArrayList<Usuario> au = new ArrayList<Usuario>();
+        Cargadatos cd = new Cargadatos(GestorPersistencia.instancia());        
+         //cd.cargarPeliculas("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/peliculas2.csv", ap);
+         //cd.cargarValoraciones("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/ratings7.csv", ap, au);
+        //request.getSession().setAttribute("gbb", gbb);
+        */
+
    
        GestorPersistencia.newConexion();
        //Cargadatos cd=new Cargadatos(GestorPersistencia.instancia());
