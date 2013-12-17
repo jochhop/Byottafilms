@@ -19,6 +19,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -140,19 +141,17 @@ public class GestorBBDD {
         
         SerializarModeloSimilitud ms;
         Algoritmos al = new Algoritmos();
-        int i = 0;
         ArrayList<Recomendacion> recom_list = new ArrayList();
         ArrayList<Pelicula> recom_pelis = new ArrayList();
         
         
         try {
             
-            HashMap<Long, TreeSet<ItemSim>> modeloS = deserializar.deserializar("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\30-Coseno").getModeloSimilitud();
+            HashMap<Long, TreeSet<ItemSim>> modeloS = deserializar.deserializar("C:\\Users\\Marci\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\30-Coseno").getModeloSimilitud();
             recom_list = al.getRecomendaciones(usu, modeloS, gp);
             
-            while(recom_list.iterator().hasNext()){
+            for(int i=0;i<recom_list.size();i++){
                 recom_pelis.add(recom_list.get(i).getPelicula());
-                i++;
             }
             
         } catch (IOException ex) {

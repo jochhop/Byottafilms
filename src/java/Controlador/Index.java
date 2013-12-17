@@ -8,9 +8,11 @@ package Controlador;
 
 
 
+import Modelo.Cargadatos;
 import Modelo.GestorBBDD;
 
 import Modelo.Peliculas.Pelicula;
+import Modelo.Usuarios.ConjuntoUsuarios;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,7 +62,12 @@ public class Index extends HttpServlet {
                 min=0;
                 max=10;
             }
-            
+            /*ArrayList<Pelicula> ap = new ArrayList<Pelicula>();
+            ConjuntoUsuarios au = new ConjuntoUsuarios();
+           Cargadatos cd = new Cargadatos(GestorPersistencia.instancia());        
+           cd.cargarPeliculas("C:\\Users\\Marci\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\peliculas2.csv", ap);
+           cd.cargarValoraciones("C:\\Users\\Marci\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\ratings7.csv", ap, au);
+           cd.calcularMedias(au.getListUsuarios(), ap);*/
             List<Pelicula> pelis=new ArrayList<Pelicula>();
             int numPelis;
             pelis=GestorBBDD.getPeliculasIntervalo(GestorPersistencia.instancia(), min, max);
