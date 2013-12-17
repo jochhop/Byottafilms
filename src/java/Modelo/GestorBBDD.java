@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -134,6 +135,9 @@ public class GestorBBDD {
     }
     //GESTION DE RECOMENDACIONES
     public static ArrayList<Pelicula> getRecomendaciones(Usuario usu,GestorPersistencia gp){
+        
+        SerializarModeloSimilitud deserializar = new SerializarModeloSimilitud();                
+        
         SerializarModeloSimilitud ms;
         Algoritmos al = new Algoritmos();
         int i = 0;
@@ -143,8 +147,8 @@ public class GestorBBDD {
         
         try {
             
-            ms = GestorBBDD.deserializar("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\30-Coseno");            
-            recom_list = al.getRecomendaciones(usu, ms.getModeloSimilitud(), gp);
+            HashMap<Long, TreeSet<ItemSim>> modeloS = deserializar.deserializar("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\30-Coseno").getModeloSimilitud();
+            recom_list = al.getRecomendaciones(usu, modeloS, gp);
             
             while(recom_list.iterator().hasNext()){
                 recom_pelis.add(recom_list.get(i).getPelicula());
@@ -158,9 +162,5 @@ public class GestorBBDD {
         }
         return recom_pelis;
     }
-    
-    public static SerializarModeloSimilitud deserializar (String archivo) throws IOException, ClassNotFoundException {        
-        ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(archivo));
-        return (SerializarModeloSimilitud) entrada.readObject();
-    }
+
 }

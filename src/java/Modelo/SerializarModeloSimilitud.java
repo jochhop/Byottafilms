@@ -34,12 +34,12 @@ public class SerializarModeloSimilitud implements Serializable{
         ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(archivo));
         salida.writeObject(this);
     }
-   /* 
+   
     public SerializarModeloSimilitud deserializar (String archivo) throws IOException, ClassNotFoundException {        
         ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(archivo));
         return (SerializarModeloSimilitud) entrada.readObject();
     }
-    */
+    
     public HashMap<Long, TreeSet<ItemSim>> getModeloSimilitud() {
         return modeloSimilitud;
     }
