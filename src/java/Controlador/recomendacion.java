@@ -44,6 +44,7 @@ public class recomendacion extends HttpServlet {
        //GestorPersistencia.newConexion();
        try {
             HttpSession sesion_actual = request.getSession(true);
+            String message="";
             Usuario user=(Usuario)sesion_actual.getAttribute("user");
             ArrayList<Pelicula> pelis = (ArrayList<Pelicula>)sesion_actual.getAttribute("pelis2");
             int min;
@@ -68,6 +69,7 @@ public class recomendacion extends HttpServlet {
             sesion_actual.setAttribute("max", max);
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
+            sesion_actual.setAttribute("message", message);
             dispatcher = request.getRequestDispatcher("recomendacion.jsp");
             dispatcher.include(request, response);
             dispatcher = request.getRequestDispatcher("footer.jsp");

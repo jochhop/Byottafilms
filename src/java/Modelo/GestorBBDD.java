@@ -49,8 +49,8 @@ public class GestorBBDD {
     //GESTIÓN DE PELÍCULAS
     
     public static long selectMaxIdPelicula(GestorPersistencia gp){
-        Query consulta = gp.getEntityManager().createQuery("SELECT MAX(p.ID) FROM Peliculas p");
-        int maxid=consulta.getFirstResult();
+        Query consulta = gp.getEntityManager().createQuery("SELECT p FROM Peliculas p");
+        long maxid=consulta.getResultList().size();
         return maxid;
     }
    

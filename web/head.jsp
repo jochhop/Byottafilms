@@ -32,6 +32,7 @@
       <span class="icon-bar"></span>
     </button>
     <a class="navbar-brand" href="/Byottafilms">ByottaFilms</a>
+    <p class="navbar-text"><span class="label label-danger">beta privada</span></p>
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
@@ -65,6 +66,7 @@
                         </a>
                         </li>
                     <%}%>
+                    <li><a href=<%="/Byottafilms/recomendacion"%>>Recomendaciones</a></li>
                     <li><a href=<%="/Byottafilms/profile"%>>Mi perfil</a></li>
                     <li><a href="/Byottafilms/logout">Salir</a></li>
                  </ul>

@@ -54,14 +54,17 @@ public class login extends HttpServlet {
                             + "Hola <strong>"+user.getNombre()+"</strong>! te has logueado con éxito :D</div>";
                     
                     nueva_sesion.setAttribute("user", user);
+                    nueva_sesion.setAttribute("message", message);
+                    response.sendRedirect("/Byottafilms/recomendacion");
                 }else{
                     message="<div class=\"alert alert-danger fade in\">"
                             + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
                             + "El nick o la contraseña son incorrectos.</div>";
+                    nueva_sesion.setAttribute("message", message);
+                    response.sendRedirect("/Byottafilms/");
                 }
                 
-                nueva_sesion.setAttribute("message", message);
-                response.sendRedirect("/Byottafilms/");
+                
             }else{
                 message="<div class=\"alert alert-danger fade in\">"
                             + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"

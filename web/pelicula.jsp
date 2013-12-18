@@ -12,7 +12,7 @@
     Usuario user=(Usuario)session_actual.getAttribute("user");
 %>
 <style type="text/css">
-    .star-rating{ list-style:none; margin: 0px; padding:0px; width: 100px; height: 20px; position: relative; background: url(http://www.cssblog.es/ejemplos/star_rating.gif) top left repeat-x; } .star-rating li{ padding:0px; margin:0px; /**/ float: left; /* */ } .star-rating li a{ display:block; width:20px; height: 20px; text-decoration: none; text-indent: -9000px; z-index: 20; position: absolute; padding: 0px; } .star-rating li a:hover{ background: url(http://www.cssblog.es/ejemplos/star_rating.gif) left bottom; z-index: 1; left: 0px; } .star-rating a.one-star{ left: 0px; } .star-rating a.one-star:hover{ width:20px; } .star-rating a.two-stars{ left:20px; } .star-rating a.two-stars:hover{ width: 40px; } .star-rating a.three-stars:hover{ width: 60px; } .star-rating a.three-stars{ left: 40px; } .star-rating a.four-stars{ left: 60px; } .star-rating a.four-stars:hover{ width: 80px; } .star-rating a.five-stars{ left: 80px; } .star-rating a.five-stars:hover{ width: 100px; }
+    .star-rating{ border-radius:2px;list-style:none; margin: 0px; padding:0px; width: 100px; height: 20px; position: relative; background: url(http://www.cssblog.es/ejemplos/star_rating.gif) top left repeat-x; } .star-rating li{ padding:0px; margin:0px; /**/ float: left; /* */ } .star-rating li a{ display:block; width:20px; height: 20px; text-decoration: none; text-indent: -9000px; z-index: 20; position: absolute; padding: 0px; } .star-rating li a:hover{ background: url(http://www.cssblog.es/ejemplos/star_rating.gif) left bottom; z-index: 1; left: 0px; } .star-rating a.one-star{ left: 0px; } .star-rating a.one-star:hover{ width:20px; } .star-rating a.two-stars{ left:20px; } .star-rating a.two-stars:hover{ width: 40px; } .star-rating a.three-stars:hover{ width: 60px; } .star-rating a.three-stars{ left: 40px; } .star-rating a.four-stars{ left: 60px; } .star-rating a.four-stars:hover{ width: 80px; } .star-rating a.five-stars{ left: 80px; } .star-rating a.five-stars:hover{ width: 100px; }
 </style>
 <h1 class="center"><%=peli.getTitulo()%></h1>
 <div class="row">
@@ -62,7 +62,8 @@
             <%}%>
         </div>
         <%if(user!=null){%>
-            <ul class="star-rating">
+            <p>¡Valora la película!</p>
+            <ul class="star-rating" style="margin-left: 20px;background-color:gray;">
                 <li><a class="one-star" title="Valora 1 estrella de 5" href="#">1</a></li>
                 <li><a class="two-stars" title="Valora 2 estrellas de 5" href="#">2</a></li>
                 <li><a class="three-stars" title="Valora 3 estrellas de 5" href="#">3</a></li>

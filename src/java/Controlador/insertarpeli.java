@@ -41,20 +41,23 @@ public class insertarpeli extends HttpServlet {
             String message;
             String titulo=request.getParameter("titulo");
             String anio=request.getParameter("anio");
-            float media;
+            Double media;
             if(!request.getParameter("media").isEmpty()){
-                media=Float.parseFloat(request.getParameter("media"));
+                media=Double.parseDouble(request.getParameter("media"));
             }else{
-                media=-1;
+                media=-1.0;
             }
             String portada=request.getParameter("portada");
             String triler=request.getParameter("trailer");
             String descripcion=request.getParameter("descripcion");
             
             if(!titulo.isEmpty() && !anio.isEmpty()){
-                long id=GestorBBDD.selectMaxIdPelicula(GestorPersistencia.instancia());
-                Pelicula peli = new Pelicula(id, Integer.parseInt(anio), titulo);
+                long id=GestorBBDD.selectMaxIdPelicula(GestorPersistencia.instancia())+1;
+                System.out.println("Esta es la id: "+id);
+                Pelicula peli = new Pelicula(id, Integer.parseInt(anio), titulo, media);
+                GestorPersistencia.instancia().getEntityManager().getTransaction().begin();
                 GestorPersistencia.instancia().getEntityManager().persist(peli);
+                GestorPersistencia.instancia().getEntityManager().getTransaction().commit();
                 message="<div class=\"alert alert-success fade in\">"
                             + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
                             + "Película insertada correctamente.</div>";
