@@ -14,6 +14,7 @@ import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,26 +44,42 @@ public class misvaloraciones extends HttpServlet {
         try {
             HttpSession sesion_actual = request.getSession(true);
             Usuario user=(Usuario)sesion_actual.getAttribute("user");
-            ArrayList<Valoracion> valoraciones;
-            ArrayList<Pelicula> pelis = new ArrayList();
-            if(user!=null){
-                valoraciones=GestorBBDD.selectValoracionesByUsuario(GestorPersistencia.instancia(), user.getId());
+            ArrayList<Pelicula> pelis = (ArrayList<Pelicula>)sesion_actual.getAttribute("pelis");
+            int min;
+            int max;
+
+            if((request.getParameter("min")!=null) && (request.getParameter("max")!=null)){
+                min = Integer.parseInt(request.getParameter("min"));
+                max = Integer.parseInt(request.getParameter("max"));
             }else{
-                valoraciones=null;
+                min=0;
+                max=10; 
             }
-            if(valoraciones!=null){
-                Pelicula peli;
-                for(int i=0;i<valoraciones.size();i++){
-                    peli=(Pelicula)GestorBBDD.selectPeliculaById(GestorPersistencia.instancia(), valoraciones.get(i).getPelicula());
-                    if(peli!=null){
-                        pelis.add(peli);
+            if(pelis==null){
+                pelis=new ArrayList();
+                ArrayList<Valoracion> valoraciones;
+                if(user!=null){
+                    valoraciones=GestorBBDD.selectValoracionesByUsuario(GestorPersistencia.instancia(), user.getId());
+                }else{
+                    valoraciones=null;
+                }
+                if(valoraciones!=null){
+                    Pelicula peli;
+                    for(int i=0;i<valoraciones.size();i++){
+                        peli=(Pelicula)GestorBBDD.selectPeliculaById(GestorPersistencia.instancia(), valoraciones.get(i).getPelicula());
+                        if(peli!=null){
+                            pelis.add(peli);
+                        }
+                        //System.out.println("La peli es: "+peli.getTitulo());
                     }
-                    //System.out.println("La peli es: "+peli.getTitulo());
                 }
             }
+            
+            sesion_actual.setAttribute("pelis", pelis);
+            sesion_actual.setAttribute("min", min);
+            sesion_actual.setAttribute("max", max);
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
-            request.setAttribute("pelis",pelis);
             dispatcher = request.getRequestDispatcher("misvaloraciones.jsp");
             dispatcher.include(request, response);
             dispatcher = request.getRequestDispatcher("footer.jsp");

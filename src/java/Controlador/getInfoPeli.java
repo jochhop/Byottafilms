@@ -62,19 +62,21 @@ public class getInfoPeli {
             while((line = reader3.readLine()) != null) {
                     builder3.append(line);
             }
-
+            System.out.println("json eeeeeeeeeeeeees: "+builder2.toString());
             JSONObject json2 = new JSONObject(builder2.toString());
-
-            if(!json2.getJSONObject("feed").isNull("entry")){
-                JSONObject auxson2 = new JSONObject(json2.getJSONObject("feed").getJSONArray("entry").get(0).toString());
-                JSONObject auxson3 = new JSONObject(auxson2.getJSONArray("link").get(0).toString());
-                urlTrailer=auxson3.getString("href").replaceAll("&feature=youtube_gdata", "").toString();
-                urlTrailer=urlTrailer.substring(31);
-                urlTrailer="<iframe width=\"540\" height=\"290\" src=\"//www.youtube.com/embed/"+urlTrailer+"\" frameborder=\"0\" allowfullscreen></iframe>";
+            if(json2.length()!=0){
+                if(!json2.getJSONObject("feed").isNull("entry")){
+                    JSONObject auxson2 = new JSONObject(json2.getJSONObject("feed").getJSONArray("entry").get(0).toString());
+                    JSONObject auxson3 = new JSONObject(auxson2.getJSONArray("link").get(0).toString());
+                    urlTrailer=auxson3.getString("href").replaceAll("&feature=youtube_gdata", "").toString();
+                    urlTrailer=urlTrailer.substring(31);
+                    urlTrailer="<iframe width=\"540\" height=\"290\" src=\"//www.youtube.com/embed/"+urlTrailer+"\" frameborder=\"0\" allowfullscreen></iframe>";
+                }else{
+                    urlTrailer="No hay trailer disponible para esta película.";
+                }
             }else{
                 urlTrailer="No hay trailer disponible para esta película.";
             }
-
             JSONObject json3 = new JSONObject(builder3.toString());
 
             if(!json3.isNull("Poster")){

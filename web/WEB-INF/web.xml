@@ -49,16 +49,8 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>profile</servlet-name>
-        <url-pattern>/profile</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>misvaloraciones</servlet-name>
-        <url-pattern>/misvaloraciones</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>recomendacion</servlet-name>
-        <url-pattern>/recomendacion</url-pattern>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>profile</servlet-name>

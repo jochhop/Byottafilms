@@ -48,17 +48,18 @@ public class login extends HttpServlet {
             user=GestorBBDD.selecUsuarioByNick(GestorPersistencia.instancia(), usuario);
             HttpSession nueva_sesion = request.getSession(true);
             if(user!=null){
-                if(user.getPassword().contains(password)){
+                if(user.getPassword().compareTo(password)==0){
                     message="<div class=\"alert alert-success fade in\">"
                             + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
                             + "Hola <strong>"+user.getNombre()+"</strong>! te has logueado con éxito :D</div>";
                     
+                    nueva_sesion.setAttribute("user", user);
                 }else{
                     message="<div class=\"alert alert-danger fade in\">"
                             + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
                             + "El nick o la contraseña son incorrectos.</div>";
                 }
-                nueva_sesion.setAttribute("user", user);
+                
                 nueva_sesion.setAttribute("message", message);
                 response.sendRedirect("/Byottafilms/");
             }else{

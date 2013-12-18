@@ -3,6 +3,7 @@
     Created on : 19-nov-2013, 13:06:55
     Author     : Gabriel
 --%>
+<%@page import="Controlador.getInfoPeli"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="Modelo.Peliculas.Pelicula"%>
@@ -17,8 +18,12 @@
         </tr>
     </thead>
     <tbody>
-        <% ArrayList<Pelicula> pelis=((ArrayList<Pelicula>)request.getAttribute("pelis"));%>
-        <% for(int i=0;i<pelis.size();i++){ %>
+        <% ArrayList<Pelicula> pelis=((ArrayList<Pelicula>)request.getAttribute("pelis"));
+            getInfoPeli info;
+        %>
+        <% for(int i=0;i<pelis.size();i++){ 
+            //info = new getInfoPeli(pelis.get(i).getTitulo());
+        %>
         <tr>
             <td><%= pelis.get(i).getID() %></td>
             <td><%= pelis.get(i).getAnio() %></td>

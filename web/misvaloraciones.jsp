@@ -10,6 +10,9 @@
 <%
     HttpSession sesion_actual = request.getSession(true);
     Usuario user=(Usuario)sesion_actual.getAttribute("user");
+    ArrayList<Pelicula> pelis=(ArrayList<Pelicula>)sesion_actual.getAttribute("pelis");
+    int min = (Integer)sesion_actual.getAttribute("min");
+    int max = (Integer)sesion_actual.getAttribute("max");
 %>
 <h2>Tus valoraciones <%=user.getNombre()%></h2>
 <table class="table table-striped">
@@ -23,8 +26,12 @@
         </tr>
     </thead>
     <tbody>
-        <% ArrayList<Pelicula> pelis=((ArrayList<Pelicula>)request.getAttribute("pelis"));%>
-        <% for(int i=0;i<pelis.size();i++){ %>
+        <% 
+            if(max>pelis.size()){
+                max=pelis.size();
+            }
+            for(int i=min;i<max;i++){ 
+        %>
         <tr>
             <td><%= pelis.get(i).getID() %></td>
             <td><%= pelis.get(i).getAnio() %></td>
@@ -35,3 +42,10 @@
         <% } %>
       </tbody>
 </table>
+<ul class="pager">
+    <% if(min>1) {%>
+        <li><a href=<%="/Byottafilms/misvaloraciones?min="+(min-10)+"&max="+(max-10)%>>Anterior</a></li>
+    <%}%>
+    <li><a href=<%="/Byottafilms/misvaloraciones?min="+(min+10)+"&max="+(max+10)%>>Siguiente</a></li>
+
+</ul>
