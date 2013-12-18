@@ -47,5 +47,4 @@
         <li><a href=<%="/Byottafilms/misvaloraciones?min="+(min-10)+"&max="+(max-10)%>>Anterior</a></li>
     <%}%>
     <li><a href=<%="/Byottafilms/misvaloraciones?min="+(min+10)+"&max="+(max+10)%>>Siguiente</a></li>
-
 </ul>

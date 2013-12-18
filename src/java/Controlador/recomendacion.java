@@ -22,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class recomendacion extends HttpServlet {
 
@@ -40,31 +41,33 @@ public class recomendacion extends HttpServlet {
         PrintWriter out = response.getWriter();               
 
    
-       GestorPersistencia.newConexion();
+       //GestorPersistencia.newConexion();
        try {
-            int min, max;
-            if(request.getParameterNames().hasMoreElements()){
-                min=Integer.parseInt(request.getParameter("min"));
-                max=Integer.parseInt(request.getParameter("max"));           
+            HttpSession sesion_actual = request.getSession(true);
+            Usuario user=(Usuario)sesion_actual.getAttribute("user");
+            ArrayList<Pelicula> pelis = (ArrayList<Pelicula>)sesion_actual.getAttribute("pelis2");
+            int min;
+            int max;
+
+            if((request.getParameter("min")!=null) && (request.getParameter("max")!=null)){
+                min = Integer.parseInt(request.getParameter("min"));
+                max = Integer.parseInt(request.getParameter("max"));
             }else{
                 min=0;
-                max=10;
+                max=10; 
             }
-                       
-            List<Pelicula> pelis= new ArrayList<Pelicula>();
-            int numPelis;
-            Usuario usu = new Usuario();
-            long id = 437;
-            int i = 0;
-            usu = GestorBBDD.selectUsuarioById(GestorPersistencia.instancia(), id);
             
-            pelis = GestorBBDD.getRecomendaciones(usu,GestorPersistencia.instancia());            
+            if(pelis==null){
+                pelis=new ArrayList();
+                pelis = GestorBBDD.getRecomendaciones(user,GestorPersistencia.instancia());            
+            }
 
-            numPelis=pelis.size();
+            System.out.println("Tamaño de las recomendacionesasssssssssssssssssssSAAAAAAAA: "+pelis.size());
+            sesion_actual.setAttribute("pelis2", pelis);
+            sesion_actual.setAttribute("min", min);
+            sesion_actual.setAttribute("max", max);
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
-            request.setAttribute("pelis",pelis);
-            request.setAttribute("numPelis",numPelis);
             dispatcher = request.getRequestDispatcher("recomendacion.jsp");
             dispatcher.include(request, response);
             dispatcher = request.getRequestDispatcher("footer.jsp");

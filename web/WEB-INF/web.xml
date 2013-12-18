@@ -36,6 +36,10 @@
         <servlet-name>recomendacion</servlet-name>
         <servlet-class>Controlador.recomendacion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>insertarpeli</servlet-name>
+        <servlet-class>Controlador.insertarpeli</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Index</servlet-name>
         <url-pattern>/</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>recomendacion</servlet-name>
         <url-pattern>/recomendacion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>insertarpeli</servlet-name>
+        <url-pattern>/insertarpeli</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -15,41 +15,41 @@
     </ul>
     <div class="tab-content">
         <div id="pelicula" class="tab-pane fade active in">
-            <form class="form-horizontal" role="form" style="margin-top: 30px;" method="POST" action="/Byottafilms/nuevapeli">
+            <form class="form-horizontal" role="form" style="margin-top: 30px;" method="POST" action="/Byottafilms/insertarpeli">
             <div class="form-group">
               <label for="inputTitulo" class="col-sm-2 control-label">Título</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputTitulo" placeholder="Título de la película">
+                <input type="text" name="titulo" class="form-control" id="inputTitulo" placeholder="Título de la película">
               </div>
             </div>
             <div class="form-group">
               <label for="inputAnio" class="col-sm-2 control-label">Año</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputAnio" placeholder="Año de la película">
+                <input type="text" name="anio" class="form-control" id="inputAnio" placeholder="Año de la película">
               </div>
             </div>
             <div class="form-group">
               <label for="inputMedia" class="col-sm-2 control-label">Media</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputMedia" placeholder="Nota de la película">
+                <input type="text" name="media" class="form-control" id="inputMedia" placeholder="Nota de la película">
               </div>
             </div>
             <div class="form-group">
               <label for="inputPortada" class="col-sm-2 control-label">Portada</label>
               <div class="col-sm-10">
-                <input type="file" class="form-control" id="inputPortada" placeholder="Portada de la película">
+                <input type="file" name="portada" class="form-control" id="inputPortada" placeholder="Portada de la película">
               </div>
             </div>
             <div class="form-group">
               <label for="inputTrailer" class="col-sm-2 control-label">Trailer</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputTitulo" placeholder="Trailer de la película">
+                <input type="text" name="trailer" class="form-control" id="inputTitulo" placeholder="Trailer de la película">
               </div>
             </div>
             <div class="form-group">
               <label for="inputDesc" class="col-sm-2 control-label">Descripción</label>
               <div class="col-sm-10">
-                  <textarea class="form-control" id="inputDesc" placeholder="Descripción de la película"></textarea>
+                  <textarea class="form-control" name="descripcion" id="inputDesc" placeholder="Descripción de la película"></textarea>
               </div>
             </div>
             <div class="form-group">

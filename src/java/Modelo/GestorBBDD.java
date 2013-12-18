@@ -47,6 +47,13 @@ public class GestorBBDD {
     }
     
     //GESTIÓN DE PELÍCULAS
+    
+    public static long selectMaxIdPelicula(GestorPersistencia gp){
+        Query consulta = gp.getEntityManager().createQuery("SELECT MAX(p.ID) FROM Peliculas p");
+        int maxid=consulta.getFirstResult();
+        return maxid;
+    }
+   
     public static ConjuntoPeliculas selectPeliculas(GestorPersistencia gp){
         Query consulta = gp.getEntityManager().createQuery("SELECT p FROM Peliculas p");
         ConjuntoPeliculas peliculas = new ConjuntoPeliculas((ArrayList)consulta.getResultList());
@@ -156,7 +163,7 @@ public class GestorBBDD {
         
         try {
             
-            HashMap<Long, TreeSet<ItemSim>> modeloS = deserializar.deserializar("C:\\Users\\Marci\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\30-Coseno").getModeloSimilitud();
+            HashMap<Long, TreeSet<ItemSim>> modeloS = deserializar.deserializar("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/30-Coseno").getModeloSimilitud();
             recom_list = al.getRecomendaciones(usu, modeloS, gp);
             
             for(int i=0;i<recom_list.size();i++){

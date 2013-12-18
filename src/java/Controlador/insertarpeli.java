@@ -6,25 +6,22 @@
 
 package Controlador;
 
-import Modelo.Cargadatos;
 import Modelo.GestorBBDD;
-
 import Modelo.Peliculas.Pelicula;
-import Modelo.Usuarios.ConjuntoUsuarios;
 import Persistencia.GestorPersistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Query;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class Index extends HttpServlet {
+/**
+ *
+ * @author jose
+ */
+public class insertarpeli extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,47 +36,37 @@ public class Index extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        //GestorBBDD gbb = new GestorBBDD();                     
-
-        /*ArrayList<Pelicula> ap = new ArrayList<Pelicula>();
-        ArrayList<Usuario> au = new ArrayList<Usuario>();
-        Cargadatos cd = new Cargadatos(GestorPersistencia.instancia());        
-         //cd.cargarPeliculas("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/peliculas2.csv", ap);
-         //cd.cargarValoraciones("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/ratings7.csv", ap, au);
-        //request.getSession().setAttribute("gbb", gbb);
-        */
-
-   
-       GestorPersistencia.newConexion();
-       //Cargadatos cd=new Cargadatos(GestorPersistencia.instancia());
-       //ArrayList<Pelicula> pelis2=new ArrayList();
-       //ConjuntoUsuarios usuarios=new ConjuntoUsuarios();
-       //cd.cargarPeliculas("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/peliculas2.csv", pelis2);
-       //cd.cargarValoraciones("/home/jose/NetBeansProjects/Byottafilms/src/java/Recursos/ratings7.csv", pelis2, usuarios);
-       //cd.calcularMedias(usuarios.getListUsuarios(), pelis2);
-       try {
-           HttpSession sesion_actual = request.getSession(true);
-           String message="";
-            int min, max;
-            if(request.getParameterNames().hasMoreElements()){
-                min=Integer.parseInt(request.getParameter("min"));
-                max=Integer.parseInt(request.getParameter("max"));           
+        try {
+            HttpSession sesion_actual = request.getSession(true);
+            String message;
+            String titulo=request.getParameter("titulo");
+            String anio=request.getParameter("anio");
+            float media;
+            if(!request.getParameter("media").isEmpty()){
+                media=Float.parseFloat(request.getParameter("media"));
             }else{
-                min=0;
-                max=10;
+                media=-1;
+            }
+            String portada=request.getParameter("portada");
+            String triler=request.getParameter("trailer");
+            String descripcion=request.getParameter("descripcion");
+            
+            if(!titulo.isEmpty() && !anio.isEmpty()){
+                long id=GestorBBDD.selectMaxIdPelicula(GestorPersistencia.instancia());
+                Pelicula peli = new Pelicula(id, Integer.parseInt(anio), titulo);
+                GestorPersistencia.instancia().getEntityManager().persist(peli);
+                message="<div class=\"alert alert-success fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "Película insertada correctamente.</div>";
+            }else{
+                message="<div class=\"alert alert-danger fade in\">"
+                            + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>"
+                            + "Película no insertada, el título y el año son obligatorios.</div>";
             }
             
-            List<Pelicula> pelis;
-            pelis=GestorBBDD.getPeliculasIntervalo(GestorPersistencia.instancia(), min, max);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
-            dispatcher.include(request, response);
             sesion_actual.setAttribute("message", message);
-            request.setAttribute("pelis",pelis);
-            dispatcher = request.getRequestDispatcher("index.jsp");
-            dispatcher.include(request, response);
-            dispatcher = request.getRequestDispatcher("footer.jsp");
-            dispatcher.include(request, response);
+            response.sendRedirect("/Byottafilms/admin");
+            
         } finally {
             out.close();
         }
