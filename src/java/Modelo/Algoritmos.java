@@ -238,12 +238,7 @@ public class Algoritmos {
     private double calcularPrediccionWA(Usuario u, TreeSet<ItemSim> vecinos, ArrayList<Pelicula> peliculas) {
         // Estructura con solamente las valoraciones que un usuario ha realizado sobre los k vecinos mas cercanos a idP
         ArrayList<Valoracion> valoracionesCercanas = new ArrayList();
-        
-        // PASO 1: Quedarnos con las valoraciones a las películas más cercanas.
-        // 1.1. Se recorren los vecinos mas cercanos a idP
-        //mostrarVecinos(vecinos);
-        for(ItemSim i : vecinos){
-            // 1.2. Se comprueba si el usuario a valorado a dicho vecino
+        for (ItemSim i : vecinos) {
             if ((u.buscarIdP(i.getId()))){
                 // 1.3. Si es así se almacena en la estructura valoracionesCercanas.
                 valoracionesCercanas.add(u.getValoraciones().get(i.getId()));

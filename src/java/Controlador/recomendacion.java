@@ -22,7 +22,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class recomendacion extends HttpServlet {
 
@@ -40,13 +39,10 @@ public class recomendacion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();               
 
-
+   
+       GestorPersistencia.newConexion();
        try {
-           
-            HttpSession session_actual=request.getSession(true);
-            Usuario user=(Usuario)session_actual.getAttribute("user");
             int min, max;
-            
             if(request.getParameterNames().hasMoreElements()){
                 min=Integer.parseInt(request.getParameter("min"));
                 max=Integer.parseInt(request.getParameter("max"));           
@@ -55,18 +51,20 @@ public class recomendacion extends HttpServlet {
                 max=10;
             }
                        
-            List<Pelicula> pelis= new ArrayList();
+            List<Pelicula> pelis= new ArrayList<Pelicula>();
             int numPelis;
-            //Usuario usu = new Usuario();
+            Usuario usu = new Usuario();
             long id = 437;
             int i = 0;
-            //usu = GestorBBDD.selectUsuarioById(GestorPersistencia.instancia(), id);
+            usu = GestorBBDD.selectUsuarioById(GestorPersistencia.instancia(), id);
             
-            pelis = GestorBBDD.getRecomendaciones(user,GestorPersistencia.instancia());            
-            System.out.println("Tamaño del vector: "+pelis.size());
+            pelis = GestorBBDD.getRecomendaciones(usu,GestorPersistencia.instancia());            
+
+            numPelis=pelis.size();
             RequestDispatcher dispatcher = request.getRequestDispatcher("head.jsp");
             dispatcher.include(request, response);
             request.setAttribute("pelis",pelis);
+            request.setAttribute("numPelis",numPelis);
             dispatcher = request.getRequestDispatcher("recomendacion.jsp");
             dispatcher.include(request, response);
             dispatcher = request.getRequestDispatcher("footer.jsp");

@@ -19,6 +19,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -143,33 +144,23 @@ public class GestorBBDD {
         return (float)nota/(float)valoraciones.getListValoraciones().size();
     }
     //GESTION DE RECOMENDACIONES
-    public static ArrayList<Pelicula> getRecomendaciones(Usuario usu, GestorPersistencia gp){
-        SerializarModeloSimilitud ms = new SerializarModeloSimilitud();
+    public static ArrayList<Pelicula> getRecomendaciones(Usuario usu,GestorPersistencia gp){
+        
+        SerializarModeloSimilitud deserializar = new SerializarModeloSimilitud();                
+        
+        SerializarModeloSimilitud ms;
         Algoritmos al = new Algoritmos();
-        int i = 0;
         ArrayList<Recomendacion> recom_list = new ArrayList();
         ArrayList<Pelicula> recom_pelis = new ArrayList();
-        System.out.println("EntraaaaaAAAAAAAAAAAAAAAAAAAAaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAaa");
+        
         
         try {
-            String url = 30+"-"+0+"-"+0;
-            //SerializarModeloSimilitud deserializar = new SerializarModeloSimilitud();
-            HashMap<Long, TreeSet<ItemSim>> modeloS;// = deserializar.deserializar("modelosSimilitud/"+url+".bin").getModeloSimilitud();
-            System.out.println("EntraaaaaAAAAAAAAAAAAAAAAAAAA12312312312312312312312312AAAAAAAAAAAAaa");
             
-            long id = 2130;
-        
-            //Usuario u = this.getUsuarioBD(instancia, id);
-            //this.getRecomendaciones(u, 8, modeloS, instancia);
-            //ms = GestorBBDD.deserializar("modelosSimilitud/30-0-0"); 
-            modeloS = ms.deserializar("modelosSimilitud/30-0-0.bin").getModeloSimilitud();
-            System.out.println("paaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAaa");
-            System.out.println("tamaño del modelo 1: "+modeloS.size());
+            HashMap<Long, TreeSet<ItemSim>> modeloS = deserializar.deserializar("C:\\Users\\Marci\\Documents\\NetBeansProjects\\Byottafilms\\src\\java\\Recursos\\30-Coseno").getModeloSimilitud();
             recom_list = al.getRecomendaciones(usu, modeloS, gp);
-            System.out.println("tamaño del modelo: "+modeloS.size());
-            while(recom_list.iterator().hasNext()){
+            
+            for(int i=0;i<recom_list.size();i++){
                 recom_pelis.add(recom_list.get(i).getPelicula());
-                i++;
             }
             
         } catch (IOException ex) {
@@ -179,9 +170,5 @@ public class GestorBBDD {
         }
         return recom_pelis;
     }
-    
-    public static SerializarModeloSimilitud deserializar (String archivo) throws IOException, ClassNotFoundException {        
-        ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(archivo));
-        return (SerializarModeloSimilitud) entrada.readObject();
-    }
+
 }
